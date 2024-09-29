@@ -93,7 +93,7 @@ Utilizamos **GitHub Actions** para la integración continua, lo que permite auto
 ### 1. Clonar el repositorio
 
 ```bash
-git clone https://github.com/tuusuario/movilZonaDoce.git
+git clone https://github.com/Mobius1234Aque/movilZonaDoce.git
 cd movilZonaDoce
 ```
 ### 2. Instalar dependencias
