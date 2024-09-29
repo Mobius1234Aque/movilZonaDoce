@@ -1,8 +1,9 @@
 # Proyecto de Aplicación Móvil
 
 ## Descripción del Proyecto
+Este proyecto consiste en una aplicación móvil desarrollada con React Native y conectada a un backend previamente implementado en Express. Su principal objetivo es facilitar el acceso a los recursos y funcionalidades clave de manera intuitiva y eficiente, mejorando la experiencia del usuario final. La aplicación está diseñada para ser una herramienta que simplifique la interacción de los usuarios con la plataforma, permitiendo realizar tareas específicas de forma rápida y accesible, independientemente del nivel técnico del usuario. Además, busca optimizar la usabilidad y el rendimiento para que los usuarios puedan acceder a la información y servicios en tiempo real, minimizando fricciones y maximizando la productividad.
 
-Este proyecto consiste en una aplicación móvil desarrollada con **React Native** y conectada a un backend existente basado en **Express**. La aplicación tiene como objetivo [describir el objetivo principal de la app], y sigue una metodología de desarrollo ágil utilizando **Extreme Programming (XP)**.
+El desarrollo del proyecto sigue una metodología ágil basada en los principios de **Extreme Programming (XP)**, enfocándose en ciclos rápidos de entrega, colaboración continua con los usuarios y flexibilidad para adaptarse a los cambios en los requisitos a medida que surgen nuevas necesidades.
 
 ---
 
@@ -94,3 +95,13 @@ Utilizamos **GitHub Actions** para la integración continua, lo que permite auto
 ```bash
 git clone https://github.com/tuusuario/movilZonaDoce.git
 cd movilZonaDoce
+```
+### 2. Instalar dependencias
+```bash
+npm install
+```
+
+### 3. Iniciar proyecto
+```bash
+   npx expo start
+```
