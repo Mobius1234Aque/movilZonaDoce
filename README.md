@@ -70,6 +70,29 @@ Hemos adoptado la estrategia **GitFlow** para el control de versiones, que inclu
 - **feature/**: Ramas creadas para desarrollar características específicas.
 - **hotfix/**: Ramas para corregir errores críticos en producción.
 
+### 3. Flujo de creacion de ramas
+1. **Creación de ramas**:
+   - Para cada nueva funcionalidad, se crea una rama desde `develop` con el prefijo `feature/` (e.g., `feature/nueva-funcionalidad`). Cada miembro del equipo trabaja en su rama hasta que la funcionalidad está completa.
+   - Para preparaciones de lanzamientos, se crean ramas `release/` desde `develop`.
+   - Las correcciones urgentes se realizan en ramas `hotfix/` creadas desde `master`.
+
+2. **Revisión de código**:
+   - Una vez completada la funcionalidad en la rama `feature/`, se crea un **pull request** hacia la rama `develop`. Este proceso incluye una revisión exhaustiva del código por otros miembros del equipo para garantizar que cumple con los estándares de calidad, y que no introduce errores o conflictos.
+   - Las ramas `release/` y `hotfix/` también requieren pull requests hacia `develop` y `master`.
+
+3. **Fusión**:
+   - Después de pasar la revisión y las pruebas, las ramas `feature/` se fusionan en `develop` y las ramas `hotfix/` se fusionan tanto en `develop` como en `master`.
+   - Las ramas de preparación de lanzamiento (`release/`) son fusionadas en `master` una vez que se aprueban y se lanzan a producción.
+
+Este flujo asegura que cada nueva funcionalidad o corrección pase por un proceso de revisión y pruebas antes de ser integrada en las ramas principales, lo que mejora la calidad y estabilidad del código.
+
+### 4. Integracion CI
+- **Pruebas unitarias** para asegurar que cada componente del sistema funcione correctamente.
+- **Pruebas de integración** para validar que los módulos interactúan adecuadamente entre sí.
+- **Linting y análisis de estilo** para asegurar que el código cumpla con las guías de estilo definidas y sea mantenible.
+
+La integración continua también ayuda a detectar errores de manera temprana y evitar que código defectuoso llegue a producción, mejorando así la eficiencia del equipo y la estabilidad del proyecto.
+
 ---
 
 ## Estrategia de Despliegue
