@@ -44,8 +44,8 @@ const data: CardItem[] = [
   },
   {
     id: '5',
-    title: 'Card Header 4',
-    description: 'This is a card description 4',
+    title: 'Card Header 5',
+    description: 'This is a card description 5',
     imageUri: 'https://example.com/another-image.jpg',
   },
 ];
@@ -55,7 +55,10 @@ export default function Evidencias() {
 
   // 3. Tipar el parámetro item como CardItem
   const renderItem = ({ item }: { item: CardItem }) => (
-    <View style={tw`p-2`}>
+    <View style={[
+      tw`p-2`, 
+      { width: (width / 2) - 16 } // Ajusta el ancho de la tarjeta para que ocupe la mitad de la pantalla con padding incluido
+    ]}>
       <CardComponent
         title={item.title}
         description={item.description}
@@ -65,6 +68,7 @@ export default function Evidencias() {
   );
 
   return (
+    
     <View style={tw`flex-1 bg-white`}>
       {/* FlatList para mostrar los cards */}
       <FlatList
@@ -73,7 +77,7 @@ export default function Evidencias() {
         keyExtractor={(item) => item.id}
         numColumns={2}  
         contentContainerStyle={tw`p-4`}
-        columnWrapperStyle={{ justifyContent: 'space-around' }} // Para espaciado entre columnas
+        columnWrapperStyle={{ justifyContent: 'space-between' }} // Para espaciado entre columnas
       />
 
       {/* Modal */}

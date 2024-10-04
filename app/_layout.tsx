@@ -10,6 +10,7 @@ import { useFonts } from "expo-font";
 import "react-native-reanimated";
 import { useColorScheme } from "@/hooks/useColorScheme";
 import Header from "@/components/general/header"; // Importa el header aquí
+import HeaderProfile from "@/components/general/HeaderProfile";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -40,6 +41,13 @@ export default function RootLayout() {
             headerShown: false,         // Asegura que el header esté visible
           }}
         />
+      <Stack.Screen name="profile"           
+            options={{
+            header: () => <HeaderProfile/>,  // Mostrar Header en los tabs también
+            headerShown: true, 
+          }}
+ />
+
         <Stack.Screen name="+not-found" />
         <Stack.Screen
           name="(tabs)"

@@ -3,7 +3,7 @@ import { View, Text, Image, TouchableOpacity, Dimensions } from 'react-native';
 import tw from 'twrnc';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
-const { width } = Dimensions.get('window'); // Obtenemos el ancho de la ventana para ajustar dinámicamente el tamaño
+const { width, height } = Dimensions.get('window'); // Obtener ancho y altura de la ventana
 
 interface CardProps {
   title: string;
@@ -12,9 +12,11 @@ interface CardProps {
 }
 
 const CardComponent: React.FC<CardProps> = ({ title, description, imageUri }) => {
+  const isSmallScreen = width < 350; // Definir si es una pantalla pequeña
+
   return (
     <View style={tw`bg-white rounded-lg overflow-hidden m-2 shadow-lg`}>
-
+      
       {/* Imagen adaptativa */}
       <Image
         source={{ uri: imageUri }}
@@ -22,21 +24,25 @@ const CardComponent: React.FC<CardProps> = ({ title, description, imageUri }) =>
           tw`w-full rounded-t-lg`,
           { height: width * 0.6 }, // Ajustamos el alto proporcional al ancho de la pantalla
         ]}
-        resizeMode="cover" // Aseguramos que la imagen cubra el área del contenedor
+        resizeMode="cover"
       />
-
+      
       {/* Botón de opciones */}
       <TouchableOpacity style={tw`absolute top-2 right-2 p-2 bg-gray-600 bg-opacity-50 rounded-full`}>
         <MaterialIcons name="more-vert" size={24} color="white" />
       </TouchableOpacity>
-
+      
       {/* Contenido de la tarjeta */}
       <View style={tw`p-4`}>
-        {/* Título de la tarjeta */}
-        <Text style={tw`text-lg font-semibold text-gray-900`}>{title}</Text>
+        {/* Título adaptativo */}
+        <Text style={tw`text-gray-900 font-semibold ${isSmallScreen ? 'text-sm' : 'text-lg'}`}>
+          {title}
+        </Text>
         
-        {/* Descripción de la tarjeta */}
-        <Text style={tw`text-gray-600 mt-1`}>{description}</Text>
+        {/* Descripción adaptativa */}
+        <Text style={tw`mt-1 ${isSmallScreen ? 'text-xs' : 'text-base'} text-gray-600`}>
+          {description}
+        </Text>
       </View>
     </View>
   );
