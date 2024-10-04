@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, Dimensions, TouchableOpacity } from "react-native";
+import { View, Text, Dimensions, TouchableOpacity, useWindowDimensions } from "react-native";
 import { Svg, Path } from "react-native-svg";
 import { TabBarIcon } from "@/components/navigation/TabBarIcon";
 import { Colors } from "@/constants/Colors";
@@ -10,7 +10,6 @@ import Entypo from "@expo/vector-icons/Entypo";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { BottomTabBarProps } from "@react-navigation/bottom-tabs";
 
-const { width } = Dimensions.get("window");
 
 export const CustomTabBar: React.FC<BottomTabBarProps> = ({
   state,
@@ -18,6 +17,8 @@ export const CustomTabBar: React.FC<BottomTabBarProps> = ({
   navigation,
 }) => {
   const colorScheme = useColorScheme();
+
+  const { width } = useWindowDimensions();
 
   return (
     <View style={{ position: "absolute", bottom: 0, width, height: 70 }}>
@@ -87,43 +88,43 @@ export const CustomTabBar: React.FC<BottomTabBarProps> = ({
                   {label === "Home" ? (
                     <TabBarIcon
                       name={isFocused ? "home" : "home-outline"}
-                      size={20}
+                      size={width > 400 ? 18 : 16}
                       color={isFocused ? Colors[colorScheme ?? "light"].tint : "#8e8e93"}
                     />
                   ) : label === "Foro" ? (
                     <MaterialCommunityIcons
                       name={isFocused ? "forum" : "forum-outline"}
-                      size={20}
+                      size={width > 400 ? 18 : 16}
                       color={isFocused ? Colors[colorScheme ?? "light"].tint : "#8e8e93"}
                     />
                   ) : label === "Evidencias" ? (
                     <Entypo
                       name="documents"
-                      size={20}
+                      size={width ? 18 : 16}
                       color={isFocused ? Colors[colorScheme ?? "light"].tint : "#8e8e93"}
                     />
                   ) : label === "Calendario" ? (
                     <Entypo
                       name="calendar"
-                      size={20}
+                      size={width > 400 ? 18 : 16}
                       color={isFocused ? Colors[colorScheme ?? "light"].tint : "#8e8e93"}
                     />
                   ) : label === "Documentos" ? (
                     <AntDesign
                       name={isFocused ? "folderopen" : "folder1"}
-                      size={20}
+                      size={width > 400 ? 18 : 16}
                       color={isFocused ? Colors[colorScheme ?? "light"].tint : "#8e8e93"}
                     />
                   ) : label === "Planes" ? (
                     <MaterialIcons
                       name="subscriptions"
-                      size={20}
+                      size={width > 400 ? 18 : 16}
                       color={isFocused ? Colors[colorScheme ?? "light"].tint : "#8e8e93"}
                     />
                   ) : label === "Ayuda" ? (
                     <Entypo
                       name="help"
-                      size={20}
+                      size={width > 400 ? 18 : 16}
                       color={isFocused ? Colors[colorScheme ?? "light"].tint : "#8e8e93"}
                     />
                   ) : null}
@@ -131,7 +132,7 @@ export const CustomTabBar: React.FC<BottomTabBarProps> = ({
               )}
               <Text
                 style={{
-                  color: isFocused ? Colors[colorScheme ?? "light"].tint : "#8e8e93",fontWeight:"500"
+                  color: isFocused ? Colors[colorScheme ?? "light"].tint : "#8e8e93",fontWeight:"500", fontSize: width > 400 ? 16 : 12,
                 }}
               >
                 {label}

@@ -13,7 +13,7 @@ const TaskCard = () => {
             } flex flex-row`}
         >
             {/* Contenido de la tarjeta */}
-            <View style={tw`${width < 400 ? 'pr-2' : 'pr-4'}`}>
+            <View style={tw`${width < 400 ? 'pr-2' : 'pr-4'} w-54`}>
                 {/* Título */}
                 <Text style={tw`text-white ${width < 400 ? 'text-md' : 'text-lg'} font-semibold mb-2`}>
                     Tareas del día
@@ -29,11 +29,11 @@ const TaskCard = () => {
             </View>
 
             {/* Botón de "Ver todas" */}
-            <View style={tw`flex flex-col items-center justify-center self-center m-5`}>
+            <View style={tw`flex flex-col items-center justify-center self-center m-5 `}>
                 <TouchableOpacity
                     style={tw`border border-gray-200 rounded-lg px-2 py-2 ${
-                        width < 400 ? 'px-1 py-1' : 'px-3 py-3'
-                    } flex-row items-center justify-center`}
+                        width < 400 ? 'px-2 py-2' : 'px-3 py-3'
+                    } flex-row items-center justify-center shadow-inner bg-[#0031B0]`}
                 >
                     <Text style={tw`text-white ${width < 400 ? 'text-xs' : 'text-sm'}`}>Ver todas</Text>
                 </TouchableOpacity>
