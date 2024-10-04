@@ -19,12 +19,46 @@ El proyecto se ha dividido en **sprints** de corta duración (1-3 semanas). Cada
 El proyecto está dividido en las siguientes fases:
 
 - **Sprint 1**: Definición de Módulos
+  - **Issue/Tarea**: Definir módulos esenciales
+    - **Responsable**: Jesus Antonio Ramirez Hernandez y Reyna de los Angeles Vite Vera
+    - **Fechas**: Inicio - 9 de Septiembre, Fin - 12 de Septiembre
+    - **Descripción**: Identificar y documentar los módulos necesarios para la aplicación, estableciendo un esquema claro de funcionalidades.
 - **Sprint 2**: Diseño de Pantallas
+  - **Issue/Tarea**: Crear el diseño de las pantallas
+    - **Responsable**: Jesus Antonio Ramirez Hernandez y Reyna de los Angeles Vite Vera
+    - **Fechas**: Inicio - 15 de Septiembre, Fin - 17 de Septiembre
+    - **Descripción**: Diseñar las pantallas de la aplicación asegurando una buena experiencia de usuario y accesibilidad.
 - **Sprint 3**: Desarrollo de Interfaces de Usuario (UI)
+  - **Issue/Tarea**: Implementar la UI
+    - **Responsable**: Jesus Antonio Ramirez Hernandez
+    - **Fechas**: Inicio - 18 de Septiembre, Fin - 10 de Octubre
+    - **Descripción**: Desarrollar las interfaces de usuario basadas en los diseños aprobados en el sprint anterior.
 - **Sprint 4**: Integración con Backend
+
+  - **Issue/Tarea**: Integrar la aplicación con el backend
+    - **Responsable**: Reyna de los Angeles Vite Vera
+    - **Fechas**: Inicio - 11 de Octubre , Fin - 25 de Octubre
+    - **Descripción**: Conectar las interfaces de usuario con el backend para asegurar que los datos se manejen correctamente.
+
 - **Sprint 5**: Pruebas y Optimización
+
+  - **Issue/Tarea**: Realizar pruebas funcionales
+    - **Responsable**: Jesus Antonio Ramirez Hernandez y Reyna de los Angeles Vite Vera
+    - **Fechas**: Inicio - 30 de Octubre, Fin - 15 de Noviembre
+    - **Descripción**: Ejecutar pruebas para identificar y corregir errores, así como optimizar el rendimiento de la aplicación.
+
 - **Sprint 6**: Despliegue
+
+  - **Issue/Tarea**: Preparar la aplicación para el despliegue
+    - **Responsable**: Jesus Antonio Ramirez Hernandez y Reyna de los Angeles Vite Vera
+    - **Fechas**: Inicio - 15 de Noviembre, Fin - 25 de Noviembre
+    - **Descripción**: Configurar la aplicación para su despliegue en un entorno de producción.
+
 - **Sprint 7**: Retroalimentación y Mejoras
+  - **Issue/Tarea**: Recoger feedback y realizar mejoras
+    - **Responsable**: Jesus Antonio Ramirez Hernandez y Reyna de los Angeles Vite Vera
+    - **Fechas**: Inicio - 25 de Noviembre, Fin - 25 de Diciembre
+    - **Descripción**: Analizar la retroalimentación de los usuarios y realizar ajustes necesarios para mejorar la aplicación.
 
 ## Gestión de Tareas e Issues
 
