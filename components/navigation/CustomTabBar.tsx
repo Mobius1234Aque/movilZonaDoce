@@ -132,7 +132,7 @@ export const CustomTabBar: React.FC<BottomTabBarProps> = ({
               )}
               <Text
                 style={{
-                  color: isFocused ? Colors[colorScheme ?? "light"].tint : "#8e8e93",fontWeight:"500", fontSize: width > 400 ? 16 : 12,
+                  color: isFocused ? Colors[colorScheme ?? "light"].tint : "#8e8e93",fontWeight:"500", fontSize: width > 400 ? 14 : 12,
                 }}
               >
                 {label}
