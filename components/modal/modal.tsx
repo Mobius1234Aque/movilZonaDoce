@@ -22,7 +22,7 @@ const UploadExamModal: React.FC<UploadExamModalProps> = ({ visible, onClose }) =
       visible={visible}
       onRequestClose={onClose}
     >
-      <View style={tw`flex-1 items-center bg-gray-800 bg-opacity-50`}>
+      <View style={tw`flex-1 items-center bg-gray-800 bg-opacity-20`}>
         <View style={tw`bg-white mt-auto rounded-lg w-[${width}px] p-5`}>
           <Text style={tw`text-lg font-bold mb-4`}>Sube un nuevo examen</Text>
 

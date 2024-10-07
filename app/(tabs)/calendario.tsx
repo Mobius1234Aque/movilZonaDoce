@@ -1,19 +1,25 @@
-import { Text, Image, View } from "react-native";
-import React from "react";
+import { Text, View } from "react-native";
+import React,{useState} from "react";
 import tw from "twrnc";
-
+import CalendarWithItems from "@/components/calendar/CalendarItems";
+import UploadExamModal from "@/components/modal/modal";
+import FloatButton from "@/components/general/floatButton";
 
 export default function Calendario() {
+  const [modalVisible, setModalVisible] = useState(false);
+
 
   return(
-    <View style={tw`flex flex-col items-center justify-center flex-1 bg-white`}>
-      <Text style={tw`text-6xl `}>
-        Pantalla para el calendario
-      </Text>
-      <Text style={[tw`text-4xl`,{color:'red'}]}>
-        Hola
-      </Text>
+    <View style={tw`flex-1 bg-white`}>
+      {/* Componente de calendario con lista de items */}
+      <View style={tw`flex-1`}>
+        <CalendarWithItems/>
+      </View>
+      <UploadExamModal visible={modalVisible} onClose={() => setModalVisible(false)} />
+
+{/* Botón flotante */}
+      <FloatButton onPress={() => setModalVisible(true)} title="Open Modal" />
 
     </View>
-  )
+  );
 }

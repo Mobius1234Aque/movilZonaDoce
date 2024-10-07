@@ -11,7 +11,7 @@ interface ButtonProps {
 const { width } = Dimensions.get("window");
 
 
-const Button: React.FC<ButtonProps> = ({ title, onPress }) => {
+const Boton: React.FC<ButtonProps> = ({ title, onPress }) => {
     return (
         <View style={{width}}>
             <Pressable style={tw`bg-[#00314A] p-4 mx-8 rounded`} onPress={onPress}>
@@ -21,4 +21,4 @@ const Button: React.FC<ButtonProps> = ({ title, onPress }) => {
     );
 };
 
-export default Button;
+export default Boton;
