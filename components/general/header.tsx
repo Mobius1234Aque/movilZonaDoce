@@ -13,7 +13,7 @@ const Header: React.FC = () => {
         {/* Logo de la aplicación */}
         <View style={tw`flex-row items-center px-8`}>
           <Image
-            source={require("C:/appMovil/pruebaConTypeScript/assets/images/logo.png")}
+            source={{ uri: 'https://i.pinimg.com/736x/1d/d1/28/1dd128c08dfb042ba665d7ca90682a97.jpg' }}  // URL actualizada para el logo
             style={tw`w-20 h-20`}
           />
         </View>
