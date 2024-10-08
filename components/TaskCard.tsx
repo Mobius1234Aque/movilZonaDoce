@@ -31,10 +31,7 @@ const TaskCard = () => {
             {/* Botón de "Ver todas" */}
             <View style={tw`flex flex-col items-center justify-center self-center m-5 `}>
                 <TouchableOpacity
-                    style={tw`border border-gray-200 rounded-lg px-2 py-2 ${
-                        width < 400 ? 'px-2 py-2' : 'px-3 py-3'
-
-                    } flex-row items-center justify-center`}
+                    style={tw`border border-gray-200 rounded-lg px-2 py-2 ${width < 400 ? 'px-2 py-2' : 'px-3 py-3'} flex-row items-center justify-center`}
                 >
                     <Text style={tw`text-white ${width < 400 ? 'text-xs' : 'text-sm'}`}>Ver todas</Text>
                 </TouchableOpacity>
