@@ -39,8 +39,7 @@ export default function SplashScreen() {
   const { width, height } = useWindowDimensions();
   useEffect(() => {
     setTimeout(() => {
-      router.push("/(tabs)");
-    }, 2000);
+      router.push("/(user)/screens/loginScreen");    }, 2000);
   }, []);
 
   return (

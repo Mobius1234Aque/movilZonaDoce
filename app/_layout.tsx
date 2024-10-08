@@ -41,12 +41,18 @@ export default function RootLayout() {
             headerShown: false,         // Asegura que el header esté visible
           }}
         />
-      <Stack.Screen name="profile"           
-            options={{
-            header: () => <HeaderProfile/>,  // Mostrar Header en los tabs también
-            headerShown: true, 
-          }}
- />
+        <Stack.Screen name="profile"           
+              options={{
+              header: () => <HeaderProfile/>,  // Mostrar Header en los tabs también
+              headerShown: true, 
+            }}
+        />
+
+        <Stack.Screen name="(user)/screens"           
+              options={{
+              headerShown: false, 
+            }}
+        />
 
         <Stack.Screen name="+not-found" />
         <Stack.Screen
