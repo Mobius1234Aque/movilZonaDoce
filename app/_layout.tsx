@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   DarkTheme,
   DefaultTheme,
@@ -9,10 +9,10 @@ import * as SplashScreen from "expo-splash-screen";
 import { useFonts } from "expo-font";
 import "react-native-reanimated";
 import { useColorScheme } from "@/hooks/useColorScheme";
-import Header from "@/components/general/header"; // Importa el header aquí
+import Header from "@/components/general/header";
 import HeaderProfile from "@/components/general/HeaderProfile";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-// Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
@@ -20,12 +20,21 @@ export default function RootLayout() {
   const [loaded] = useFonts({
     SpaceMono: require("../assets/fonts/Roboto-Regular.ttf"),
   });
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
+    const checkLoginStatus = async () => {
+      const token = await AsyncStorage.getItem('userToken');
+      setIsLoggedIn(!!token); // Verifica si el token existe
+    };
+
+    checkLoginStatus();
+
     if (loaded) {
       SplashScreen.hideAsync();
     }
   }, [loaded]);
+
 
   if (!loaded) {
     return null;
@@ -34,34 +43,38 @@ export default function RootLayout() {
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
       <Stack>
-        {/* Aquí estamos usando un header global */}
+        <Stack.Screen name="profile"
+          options={{
+            header: () => <HeaderProfile />,
+            headerShown: true,
+          }}
+        />
+        <Stack.Screen name="(tabs)"
+          options={{
+            header: () => <Header />,
+            headerShown: true,
+          }}
+        />
         <Stack.Screen
           name="(screens)"
           options={{
-            headerShown: false,         // Asegura que el header esté visible
+            headerShown: false,
           }}
         />
-        <Stack.Screen name="profile"           
-              options={{
-              header: () => <HeaderProfile/>,  // Mostrar Header en los tabs también
-              headerShown: true, 
-            }}
-        />
 
-        <Stack.Screen name="(user)/screens"           
-              options={{
-              headerShown: false, 
-            }}
-        />
 
-        <Stack.Screen name="+not-found" />
-        <Stack.Screen
-          name="(tabs)"
-          options={{
-            header: () => <Header/>,  // Mostrar Header en los tabs también
-            headerShown: true, 
-          }}
-        />
+        {isLoggedIn ? (
+          // Si está autenticado, mostrar la pantalla principal
+          <Stack.Screen name="(tabs)" />
+        ) : (
+          // Si no está autenticado, mostrar la pantalla de inicio de sesión
+          <Stack.Screen
+            name="(user)/screens"
+            options={{
+              headerShown: false,
+            }}
+          />
+        )}
       </Stack>
     </ThemeProvider>
   );

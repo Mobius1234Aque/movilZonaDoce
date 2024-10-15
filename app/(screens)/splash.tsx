@@ -39,15 +39,16 @@ export default function SplashScreen() {
   const { width, height } = useWindowDimensions();
   useEffect(() => {
     setTimeout(() => {
-      router.push("/(user)/screens/loginScreen");    }, 2000);
+      router.push("/(user)/screens/loginScreen");
+    }, 2000);
   }, []);
 
   return (
     <View style={tw`flex-1 bg-[#00314A] justify-center items-center`}>
       <View style={tw`justify-center items-center flex flex-col`}>
         <Image
-            source={{ uri: 'https://i.pinimg.com/736x/1d/d1/28/1dd128c08dfb042ba665d7ca90682a97.jpg' }}  // URL actualizada para el logo
-            style={tw`w-[400px] h-[400px]`}
+          source={{ uri: 'https://i.pinimg.com/736x/1d/d1/28/1dd128c08dfb042ba665d7ca90682a97.jpg' }}  // URL actualizada para el logo
+          style={tw`w-[400px] h-[400px]`}
         />
         <Text style={tw`text-white text-6xl font-bold py-2`}>EduZona</Text>
 

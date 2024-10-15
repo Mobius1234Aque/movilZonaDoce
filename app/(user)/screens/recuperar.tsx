@@ -23,7 +23,7 @@ export default function Recuperar() {
                 <Text style={tw`text-6xl ml-10 font-bold leading-tight`}>
                     ¿Olvidaste tu contraseña?
                 </Text>
-                
+
                 {/* Línea horizontal con texto */}
                 <View style={tw`flex-row items-center mt-2 ml-2`}>
                     <View style={tw`flex-1 border-b border-gray-300`} />
@@ -37,7 +37,8 @@ export default function Recuperar() {
                 <CurpInput
                     title="Ingresa tu CURP *"
                     iconName="document"
-                    onPress={() => {}}
+                    value=""
+                    onChangeText={() => { }}
                 />
             </View>
             <View>
