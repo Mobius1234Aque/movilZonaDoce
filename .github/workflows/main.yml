@@ -1,6 +1,5 @@
 name: CI Pipeline
 
-# Sección de triggers que define cuándo debe ejecutarse el workflow
 on:
   push:
     branches:
@@ -18,7 +17,7 @@ jobs:
     
     strategy:
       matrix:
-        node-version: ['16.x', '18.x']  # Ejecutar con diferentes versiones de Node.js
+        node-version: ['16.x', '18.x'] 
 
     steps:
       - name: Checkout code
