@@ -36,6 +36,10 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
+      # Instalar Expo CLI
+      - name: Install Expo CLI
+        run: npm install --global expo-cli
+
       - name: Install dependencies
         run: npm install
 
@@ -43,7 +47,7 @@ jobs:
         run: npm test
 
       - name: Lint code with Expo
-        run: expo lint --max-warnings=0
+        run: expo lint --max-warnings=0  # Ya puedes usar expo después de instalarlo
 
       - name: Build for production
         run: npm run build
@@ -54,6 +58,10 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+
+      # Instalar Expo CLI para este job también
+      - name: Install Expo CLI
+        run: npm install --global expo-cli
 
       - name: Install dependencies
         run: npm install
