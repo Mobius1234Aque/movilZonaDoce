@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: ['16.x', '18.x'] 
+        node-version: ['16.x', '18.x']  
 
     steps:
       - name: Checkout code
@@ -35,6 +35,10 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
+      # Instalar Expo CLI
+      - name: Install Expo CLI
+        run: npm install --global expo-cli
+
       - name: Install dependencies
         run: npm install
 
@@ -42,7 +46,7 @@ jobs:
         run: npm test
 
       - name: Lint code with Expo
-        run: expo lint --max-warnings=0
+        run: expo lint --max-warnings=0  # Ya puedes usar expo después de instalarlo
 
       - name: Build for production
         run: npm run build
@@ -53,21 +57,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Install Expo CLI
+        run: npm install --global expo-cli
+
       - name: Install dependencies
         run: npm install
 
       - name: Lint code with ESLint
         run: expo lint --max-warnings=0
-
-  deploy:
-    runs-on: ubuntu-latest
-    needs: [build-and-test]
-    if: github.ref == 'refs/heads/main'
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Deploy to production
-        run: |
-          ssh usuario@servidor "cd /ruta/proyecto && git pull && npm install && npm run build && pm2 restart app"
