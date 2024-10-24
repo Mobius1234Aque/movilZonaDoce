@@ -14,10 +14,11 @@ on:
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
-    
     strategy:
       matrix:
         node-version: ['16.x', '18.x']
+        node-version: ['16.x', '18.x']  
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -35,29 +36,52 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
+      - name: Install Expo CLI
+        run: npm install --global expo-cli
+
       - name: Install dependencies
         run: npm install
 
+      # Validación de TypeScript
+      - name: TypeScript Check
+        run: npm run tsc  # Asegúrate de tener este script en package.json: "tsc": "tsc --noEmit"
+
+      # Ejecutar pruebas unitarias
       - name: Run tests
         run: npm test
 
+      # Guardar resultados de test como artefacto
+      - name: Upload test results
+        if: failure()  # Solo si fallan
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-results
+          path: ./test-results/
+
       - name: Lint code with Expo
-        run: expo lint --max-warnings=0  
+        run: expo lint --max-warnings=0  # Ya puedes usar expo después de instalarlo
 
       - name: Build for production
         run: npm run build
 
   code-analysis:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+
+      - name: Install Expo CLI
+        run: npm install --global expo-cli
 
       - name: Install dependencies
         run: npm install
 
       - name: Lint code with ESLint
+        run: expo lint --max-warnings=0
+
+      # Validar si hay errores en la compilación de TypeScript
+      - name: TypeScript Check
+        run: npm run tsc  # Esto asegura que no haya problemas de tipado en el código.
         run: expo lint --max-warnings=0  
   deploy:
     runs-on: ubuntu-latest
