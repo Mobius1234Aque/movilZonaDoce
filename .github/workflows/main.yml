@@ -17,7 +17,6 @@ jobs:
     strategy:
       matrix:
         node-version: ['16.x', '18.x']
-        node-version: ['16.x', '18.x']  
 
     steps:
       - name: Checkout code
@@ -50,7 +49,7 @@ jobs:
       - name: Run tests
         run: npm test
 
-      # Guardar resultados de test como artefacto
+      # Guardar resultados de test como artefacto, en caso de fallo
       - name: Upload test results
         if: failure()  # Solo si fallan
         uses: actions/upload-artifact@v3
@@ -59,7 +58,7 @@ jobs:
           path: ./test-results/
 
       - name: Lint code with Expo
-        run: expo lint --max-warnings=0  # Ya puedes usar expo después de instalarlo
+        run: expo lint --max-warnings=0
 
       - name: Build for production
         run: npm run build
@@ -82,11 +81,11 @@ jobs:
       # Validar si hay errores en la compilación de TypeScript
       - name: TypeScript Check
         run: npm run tsc  # Esto asegura que no haya problemas de tipado en el código.
-        run: expo lint --max-warnings=0  
+
   deploy:
     runs-on: ubuntu-latest
     needs: [build-and-test]
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main'  # Solo se ejecuta si se hace push a la rama main
 
     steps:
       - name: Checkout code
@@ -94,4 +93,4 @@ jobs:
 
       - name: Deploy to production
         run: |
-          ssh usuario@servidor "cd /ruta/proyecto && git pull && npm install && npm run build && pm2 restart app"  # pm2 para manejar el servidor
+          ssh usuario@servidor "cd /ruta/proyecto && git pull && npm install && npm run build && pm2 restart app"
