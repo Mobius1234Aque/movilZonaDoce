@@ -1,4 +1,4 @@
-import { Text, View, TouchableOpacity } from "react-native";
+import { Text, View, TouchableOpacity, ActivityIndicator } from "react-native";
 import React, { useState } from "react";
 import tw from "twrnc";
 import { CurpInput, PasswordInput } from "@/components/general/Inputs";
@@ -10,16 +10,21 @@ export default function LoginScreen() {
     const router = useRouter();
     const [curp, setCurp] = useState('');
     const [contrasena, setContrasena] = useState('');
-    const [error, setError] = useState<string | null>(null); // Estado para el mensaje de error
+    const [error, setError] = useState<string | null>(null);
+    const [loading, setLoading] = useState(false); // Estado para indicar que se está cargando
 
     const handleSave = async () => {
+        setLoading(true); // Comienza la carga
+        setError(null);   // Resetea cualquier error anterior
+
         const response = await handleLogin(curp, contrasena);
 
-        // Verifica si 'response' es definido y tiene la propiedad 'success'
+        setLoading(false); // Finaliza la carga
+
         if (response && response.success) {
-            router.push('/(tabs)');
+            router.push('/(tabs)'); // Navega a la pantalla principal en caso de éxito
         } else {
-            setError(response?.message || "Ocurrió un error inesperado"); // Usa el operador de encadenamiento opcional
+            setError(response?.message || "Ocurrió un error inesperado");
         }
     };
 
@@ -50,6 +55,13 @@ export default function LoginScreen() {
             {error && (
                 <View style={tw`mt-4 mx-8`}>
                     <Text style={tw`text-red-500 text-lg`}>{error}</Text>
+                </View>
+            )}
+
+            {/* Mostrar indicador de carga mientras se realiza la autenticación */}
+            {loading && (
+                <View style={tw`mt-4 mx-8`}>
+                    <ActivityIndicator size="large" color="#0000ff" />
                 </View>
             )}
 
