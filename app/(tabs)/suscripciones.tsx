@@ -1,19 +1,29 @@
-import { Text, Image, View } from "react-native";
-import React from "react";
-import tw from "twrnc";
+// screens/FreePlanScreen.tsx
+import React from 'react';
+import { View } from 'react-native';
+import PricingCard from '@/components/cards/pricingCard';
+import tw from 'twrnc';
 
-
-export default function Suscripciones() {
-
-  return(
-    <View style={tw`flex flex-col items-center justify-center flex-1 bg-white`}>
-      <Text style={tw`text-6xl `}>
-        Pantalla para mis Suscripciones
-      </Text>
-      <Text style={[tw`text-4xl`,{color:'red'}]}>
-        Hola
-      </Text>
+const FreePlanScreen = () => {
+  return (
+    <View style={tw`flex-1 justify-center items-center bg-white`}>
+      <PricingCard
+        title="GRATUITO"
+        price="0"
+        description="Organize across all apps by hand"
+        buttonText="Plan gratuito"
+        onPress={() => console.log("Free plan selected")}
+      />
+      <PricingCard
+        title="GRATUITO"
+        price="0"
+        description="Organize across all apps by hand"
+        buttonText="Plan gratuito"
+        onPress={() => console.log("Free plan selected")}
+      />
 
     </View>
-  )
-}
+  );
+};
+
+export default FreePlanScreen;

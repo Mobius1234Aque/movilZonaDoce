@@ -72,7 +72,7 @@ export default function Foro() {
             onPress={() => {
               // Navegamos a la pantalla de detalles del examen con los datos
               router.push({
-                pathname: "/examenDetails",
+                pathname: "../(screens)/examenDetails",
                 params: {
                   examId: subject.id,
                   examData: JSON.stringify(subject),  // Convertimos subject a string JSON
