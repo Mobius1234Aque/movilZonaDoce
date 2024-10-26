@@ -62,12 +62,7 @@ build:
 
     # Construir para Android
     - name: Build APK for Android
-      run: eas build -p android --profile preview
+      run: npx eas build --platform android --profile preview
       env:
         EAS_TOKEN: ${{ secrets.EXPO_TOKEN }}  # Usa el token de EAS para el build en la nube
 
-    # Construir para iOS
-    - name: Build IPA for iOS
-      run: eas build -p ios
-      env:
-        EAS_TOKEN: ${{ secrets.EXPO_TOKEN }}
