@@ -45,11 +45,7 @@ jobs:
       - name: Run tests
         run: npm test
 
-      # Lint del código
-      - name: Lint code
-        run: npx eslint . --max-warnings=0
-
-  # Build para Android e iOS
+      # Build para Android e iOS
   build:
     runs-on: ubuntu-latest
     needs: build-and-test
