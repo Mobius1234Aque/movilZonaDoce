@@ -35,6 +35,9 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
+      - name: Install Expo CLI
+        run: npm install --global expo-cli
+
       - name: Install dependencies
         run: npm install
 
@@ -43,8 +46,8 @@ jobs:
         run: npm test
 
       # Lint del código
-      - name: Lint code with EAS CLI
-        run: eas lint --max-warnings=0
+      - name: Lint code
+        run: npx eslint . --max-warnings=0
 
   # Build para Android e iOS
   build:
@@ -71,4 +74,3 @@ jobs:
         run: eas build -p ios
         env:
           EAS_TOKEN: ${{ secrets.EXPO_TOKEN }}
-
