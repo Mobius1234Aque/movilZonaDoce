@@ -46,27 +46,28 @@ jobs:
         run: npm test
 
       # Build para Android e iOS
-  build:
-    runs-on: ubuntu-latest
-    needs: build-and-test
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+# Build para Android e iOS
+build:
+  runs-on: ubuntu-latest
+  needs: build-and-test
+  steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
 
-      - name: Install EAS CLI
-        run: npm install --global eas-cli
+    - name: Install EAS CLI
+      run: npm install --global eas-cli
 
-      - name: Install dependencies
-        run: npm install
+    - name: Install dependencies
+      run: npm install
 
-      # Construir para Android
-      - name: Build APK for Android
-        run: eas build -p android --profile preview
-        env:
-          EAS_TOKEN: ${{ secrets.EXPO_TOKEN }}  # Usa el token de EAS para el build en la nube
+    # Construir para Android
+    - name: Build APK for Android
+      run: eas build -p android --profile preview
+      env:
+        EAS_TOKEN: ${{ secrets.EXPO_TOKEN }}  # Usa el token de EAS para el build en la nube
 
-      # Construir para iOS
-      - name: Build IPA for iOS
-        run: eas build -p ios
-        env:
-          EAS_TOKEN: ${{ secrets.EXPO_TOKEN }}
+    # Construir para iOS
+    - name: Build IPA for iOS
+      run: eas build -p ios
+      env:
+        EAS_TOKEN: ${{ secrets.EXPO_TOKEN }}
