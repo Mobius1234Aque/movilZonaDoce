@@ -60,9 +60,13 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      # Construir para Android sin npx
+      # Autenticar en EAS
+      - name: Authenticate to EAS
+        run: eas login --token ${{ secrets.EXPO_TOKEN }}
+
+      # Construir para Android
       - name: Build APK for Android
         run: eas build --platform android --profile preview
         env:
-          EAS_TOKEN: ${{ secrets.EXPO_TOKEN }}  # Usa el token de EAS para el build en la nube
+          EAS_TOKEN: ${{ secrets.EXPO_TOKEN }}
 
