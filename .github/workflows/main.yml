@@ -63,11 +63,28 @@ jobs:
         env:
           EAS_TOKEN: ${{ secrets.EXPO_TOKEN }}
 
+  # Añadir el escaneo de OWASP ZAP después del build
+  run-owasp-zap:
+    name: OWASP ZAP Scan
+    runs-on: ubuntu-latest
+    needs: build  # Solo se ejecuta si la etapa de build ha sido exitosa
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: OWASP ZAP Full Scan
+        uses: zaproxy/action-full-scan@v0.4.0
+        with:
+          target: 'https://servidor-zonadoce.vercel.app/'  # Aquí debes agregar tu API
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
   notify:
     name: Send Email Notification
     runs-on: ubuntu-latest
-    needs: build
-    if: always()  # Notificar tanto si falla como si es exitoso
+    needs: [build, run-owasp-zap]
+    if: failure() || success()  # Notificar tanto si falla como si es exitoso
+
     steps:
       - name: Send email notification
         uses: dawidd6/action-send-mail@v3
@@ -76,9 +93,9 @@ jobs:
           server_port: 465
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
-          subject: Build ${{ steps.build-and-test.outcome }}:${{ github.repository }}
+          subject: Build ${{ job.status }}:${{ github.repository }}
           body: |
-            The CI build has ${{ steps.build-and-test.outcome }} for ${{ github.repository }}.
+            The CI build has ${{ job.status }} for ${{ github.repository }}.
             Commit: ${{ github.sha }}
             Branch: ${{ github.ref }}
             Author: ${{ github.actor }}
