@@ -6,20 +6,26 @@ import tw from 'twrnc';
 import { Ionicons } from '@expo/vector-icons';
 import { loadAgenda } from "@/app/(tabs)/Controllers/calendarioController";
 
-const CalendarWithItems = () => {
+const CalendarWithItems = ({ testID }: { testID?: string }) => {
     const [selectedDate, setSelectedDate] = useState<string | null>(null);
-    const [markedDates, setMarkedDates] = useState<{ [key: string]: { marked: boolean; dotColor: string } }>({});
+    const [markedDates, setMarkedDates] = useState<{ [key: string]: { customStyles: { container: any, text: any } } }>({});
     const [agendaByDate, setAgendaByDate] = useState<{ [key: string]: any[] }>({});
     const [loading, setLoading] = useState(true);
 
-    // Cargar la agenda desde la API
     useEffect(() => {
         const fetchAgenda = async () => {
             const result = await loadAgenda();
 
             if (result.success) {
-                setMarkedDates(result.markedDates || {});  // Asegurarse de que nunca sea undefined
-                setAgendaByDate(result.agendaByDate || {});  // Asegurarse de que nunca sea undefined
+                setMarkedDates({
+                    '2024-10-25': {
+                        customStyles: {
+                            container: { backgroundColor: 'green' },
+                            text: { color: 'white', fontWeight: 'bold' },
+                        },
+                    },
+                });
+                setAgendaByDate(result.agendaByDate || {});
             } else {
                 console.error(result.message);
             }
@@ -29,29 +35,23 @@ const CalendarWithItems = () => {
         fetchAgenda();
     }, []);
 
-    // Maneja la selección de un día
-    const handleDayPress = (day: any) => {
-        setSelectedDate(day.dateString); // Almacena la fecha seleccionada
-    };
-
     if (loading) {
-        return <ActivityIndicator size="large" color="#0000ff" />;
+        return <ActivityIndicator size="large" color="#0000ff" testID="loading-indicator" />;
     }
 
     return (
-        <View style={tw`flex-1 p-4`}>
-            {/* Calendario */}
+        <View style={tw`flex-1 p-4`} testID={testID}>
             <Calendar
-                onDayPress={handleDayPress}
-                markedDates={markedDates}  // markedDates no será undefined
+                onDayPress={(day) => setSelectedDate(day.dateString)}
+                markedDates={markedDates}
                 theme={{
                     selectedDayBackgroundColor: '#00adf5',
                     todayTextColor: '#00adf5',
                     arrowColor: 'blue',
                 }}
+                testID="calendar-component"
             />
 
-            {/* Lista de actividades visible solo si se selecciona un día */}
             {selectedDate && (
                 <FlatList
                     data={agendaByDate[selectedDate] || []}
@@ -66,6 +66,7 @@ const CalendarWithItems = () => {
                         </View>
                     )}
                     ListEmptyComponent={<Text style={tw`text-gray-500 mt-4`}>No hay actividades para este día.</Text>}
+                    testID="flatlist-agenda"
                 />
             )}
         </View>
