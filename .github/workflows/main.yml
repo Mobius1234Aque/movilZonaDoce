@@ -111,7 +111,7 @@ jobs:
   notify:
     name: Send Email Notification
     runs-on: ubuntu-latest
-    needs: [build, run-owasp-zap]
+    needs: build
     if: failure() || success()
     steps:
       - name: Send email notification
