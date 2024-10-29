@@ -47,72 +47,23 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # 1. Instalar EAS CLI y dependencias
+      - name: Install EAS CLI
+        run: npm install -g eas-cli
+
       - name: Install dependencies
-        run: |
-          npm install --global eas-cli
-          sudo apt-get update
-          sudo apt-get install -y wget tar unzip lib32stdc++6 lib32z1
+        run: npm install
 
-      # 2. Construir la APK con EAS y capturar la URL
+      # Construcción para Android
       - name: Build APK for Android
-        id: eas_build
-        run: |
-          npx eas-cli build --platform android --profile preview --non-interactive | tee build_log.txt
+        run: npx eas-cli build --platform android --profile preview --non-interactive
         env:
-          EAS_TOKEN: ${{ secrets.EXPO_TOKEN }}
-
-      # 3. Extraer la URL del APK desde el log
-      - name: Extract APK URL
-        run: |
-          APK_URL=$(grep -o 'https://expo.dev/artifacts.*\.apk' build_log.txt)
-          echo "APK URL: $APK_URL"
-          echo "APK_URL=$APK_URL" >> $GITHUB_ENV
-
-      # 4. Descargar la APK usando la URL extraída
-      - name: Download APK
-        run: |
-          curl -o your-app.apk "$APK_URL"
-
-  # Iniciar el emulador y ejecutar la APK
-  emulator-and-run-apk:
-    runs-on: ubuntu-latest
-    needs: build  # Solo se ejecuta si el build fue exitoso
-    steps:
-      - name: Install Android SDK
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y wget tar unzip lib32stdc++6 lib32z1
-          wget https://dl.google.com/android/repository/commandlinetools-linux-7302050_latest.zip
-          mkdir -p "$ANDROID_HOME/cmdline-tools"
-          unzip -q commandlinetools-linux-7302050_latest.zip -d "$ANDROID_HOME/cmdline-tools"
-          yes | $ANDROID_HOME/cmdline-tools/bin/sdkmanager --licenses
-          yes | $ANDROID_HOME/cmdline-tools/bin/sdkmanager "platform-tools" "platforms;android-30" "emulator" "system-images;android-30;google_apis;x86_64"
-          $ANDROID_HOME/cmdline-tools/bin/sdkmanager --install "build-tools;30.0.3"
-
-      # 5. Iniciar el emulador Android
-      - name: Start Emulator
-        run: |
-          $ANDROID_HOME/emulator/emulator -list-avds
-          $ANDROID_HOME/emulator/emulator -avd "system-images;android-30;google_apis;x86_64" -no-window -no-audio -no-boot-anim &
-          adb wait-for-device
-          adb shell input keyevent 82 # Unlock screen
-
-      # 6. Instalar la APK en el emulador
-      - name: Install APK on Emulator
-        run: |
-          adb install your-app.apk
-
-      # 7. (Opcional) Ejecutar la aplicación o pruebas
-      - name: Launch app on Emulator
-        run: adb shell monkey -p com.example.yourapp -c android.intent.category.LAUNCHER 1
-
-
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}  # Asegúrate de configurar el token en GitHub Secrets
   notify:
     name: Send Email Notification
     runs-on: ubuntu-latest
     needs: build
-    if: failure() || success()
+    if: failure() || success()  # Notificar tanto si falla como si es exitoso
+
     steps:
       - name: Send email notification
         uses: dawidd6/action-send-mail@v3
