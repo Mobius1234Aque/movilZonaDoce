@@ -24,24 +24,28 @@ export default function Foro() {
   const router = useRouter(); // Para la navegación
 
   const fetchSubjectsData = async () => {
+    setLoading(true); // Indicamos que empieza la carga
     const result = await loadSubjects();
 
     if (result.success) {
       setSubjects(result.data);
+      setError(null); // Limpiamos cualquier error previo
     } else {
       setError(result.message);
     }
 
-    setLoading(false);
+    setLoading(false); // Indicamos que termina la carga
   };
 
   useEffect(() => {
-    fetchSubjectsData();
+    fetchSubjectsData(); // Cargar los datos al montar el componente
 
+    // Establecer un intervalo para actualizar los datos cada 30 segundos
     const intervalId = setInterval(() => {
       fetchSubjectsData();
     }, 30000);
 
+    // Limpiar el intervalo al desmontar el componente
     return () => clearInterval(intervalId);
   }, []);
 
