@@ -5,6 +5,7 @@ import { CurpInput, PasswordInput } from "@/components/general/Inputs";
 import Boton from "@/components/general/Buttons";
 import { useRouter } from "expo-router";
 import { handleLogin } from "@/app/(user)/Controller/authController";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function LoginScreen() {
     const router = useRouter();
@@ -22,6 +23,14 @@ export default function LoginScreen() {
         setLoading(false); // Finaliza la carga
 
         if (response && response.success) {
+            // Guardar la CURP en AsyncStorage si el inicio de sesión es correcto
+            try {
+                await AsyncStorage.setItem('userCURP', curp);
+                console.log("CURP guardada correctamente.");
+            } catch (error) {
+                console.error("Error al guardar la CURP:", error);
+            }
+
             router.push('/(tabs)'); // Navega a la pantalla principal en caso de éxito
         } else {
             setError(response?.message || "Ocurrió un error inesperado");

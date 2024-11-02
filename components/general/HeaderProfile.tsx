@@ -12,11 +12,11 @@ const HeaderProfile: React.FC = () => {
   return (
     <SafeAreaView style={tw`bg-[#00314A] h-[${height * 0.32}px] rounded-b-8`}>
         <View style={tw`flex flex-col items-center `}>
-            <View style={tw`flex flex-row`}>
-                <Text>penis</Text>
+            <View style={tw`flex flex-row self-start ml-4`}>
+                <Text style={tw`text-white`}>Regresar</Text>
             </View>
             <View style={tw`flex-col items-center mt-[${height * 0.03}px]`}>
-                <Text style={tw`text-white mb-5 text-xl font-extrabold`}> JUAN HERNANDEZ HERNANDEZ</Text>
+                <Text style={tw`text-white mb-5 text-xl font-extrabold`}> ---------</Text>
 
                 <Image
                 source={{ uri: 'https://w7.pngwing.com/pngs/340/946/png-transparent-avatar-user-computer-icons-software-developer-avatar-child-face-heroes-thumbnail.png' }}
