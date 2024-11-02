@@ -1,4 +1,3 @@
-// Calendario.tsx
 import { Text, View } from "react-native";
 import React, { useState } from "react";
 import tw from "twrnc";
@@ -11,10 +10,8 @@ export default function Calendario() {
     <View style={tw`flex-1 bg-white`}>
       {/* Componente de calendario con lista de items */}
       <View style={tw`flex-1`}>
-        <CalendarWithItems />
+        <CalendarWithItems testID="calendar-items" />
       </View>
-    
-     
     </View>
   );
 }
