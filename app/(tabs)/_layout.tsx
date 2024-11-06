@@ -10,15 +10,11 @@ export default function TabLayout() {
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
       "keyboardDidShow",
-      () => {
-        setKeyboardVisible(true); // Ocultar TabBar
-      }
+      () => setKeyboardVisible(true)
     );
     const keyboardDidHideListener = Keyboard.addListener(
       "keyboardDidHide",
-      () => {
-        setKeyboardVisible(false); // Mostrar TabBar
-      }
+      () => setKeyboardVisible(false)
     );
 
     return () => {
@@ -29,19 +25,18 @@ export default function TabLayout() {
 
   return (
     <Tabs
-      // Solo renderizar CustomTabBar si el teclado NO está visible
-      tabBar={(props: BottomTabBarProps) => !isKeyboardVisible && <CustomTabBar {...props} />}
+      tabBar={(props: BottomTabBarProps) =>
+        !isKeyboardVisible && <CustomTabBar {...props} />
+      }
       screenOptions={{
         headerShown: false,
       }}
     >
       <Tabs.Screen name="evidencias" options={{ title: "Evidencias" }} />
       <Tabs.Screen name="foro" options={{ title: "Foro" }} />
-      <Tabs.Screen name="calendario" options={{ title: "Calendario" }} />
       <Tabs.Screen name="index" options={{ title: "Home" }} />
-      <Tabs.Screen name="documentos" options={{ title: "Documentos" }} />
-      <Tabs.Screen name="ayuda" options={{ title: "Ayuda" }} />
-      <Tabs.Screen name="suscripciones" options={{ title: "Planes" }} />
+      <Tabs.Screen name="calendario" options={{ title: "Calendario" }} />
+      <Tabs.Screen name="mas" options={{ title: "Mas" }} />
     </Tabs>
   );
 }

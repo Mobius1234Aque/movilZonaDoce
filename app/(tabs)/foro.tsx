@@ -51,7 +51,7 @@ export default function Foro() {
 
   if (loading) {
     return (
-      <View style={tw`flex-1 justify-center items-center`}>
+      <View style={tw`flex-1 justify-center items-center bg-white`}>
         <ActivityIndicator size="large" color="#0000ff" />
       </View>
     );

@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, ScrollView, Alert } from 'react-native';
+import { View, Text, ScrollView, Alert, TouchableOpacity } from 'react-native';
 import tw from 'twrnc';
-import { Input } from '@/components/general/Inputs'; 
+import { Input } from '@/components/general/Inputs';
 import Boton from '@/components/general/Buttons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { router } from 'expo-router';
-import axios from 'axios'; 
+import axios from 'axios';
 
 const ProfileScreen = () => {
     const [nombreCompleto, setNombreCompleto] = useState('');
@@ -16,15 +16,14 @@ const ProfileScreen = () => {
     const [escuela, setEscuela] = useState('');
 
     // Función para obtener el perfil desde el backend
-    const fetchProfile = async (curp) => {
+    const fetchProfile = async (curp: string) => {
         try {
             const response = await axios.get(`https://servidor-zonadoce.vercel.app/perfil?curp=${curp}`);
-            
-            const perfilData = response.data[0]; 
+            const perfilData = response.data[0];
             console.log('Datos del perfil obtenidos de la API:', perfilData);
 
             setNombreCompleto(`${perfilData.nombre} ${perfilData.aPaterno} ${perfilData.aMaterno}`);
-            setEmail(perfilData.correo || ''); 
+            setEmail(perfilData.correo || '');
             setGrupo(perfilData.grupo || '');
             setGrado(perfilData.grado_id || '');
             setEscuela(perfilData.plantel_nombre || '');
@@ -38,14 +37,14 @@ const ProfileScreen = () => {
         const getCurpAndFetchProfile = async () => {
             try {
                 const storedCurp = await AsyncStorage.getItem('userCURP');
-                
+
                 if (storedCurp) {
-                    setCurp(storedCurp); 
+                    setCurp(storedCurp);
                     await fetchProfile(storedCurp);
                 } else {
                     console.log('CURP no encontrada en AsyncStorage');
                     Alert.alert('Error', 'CURP no encontrada. Inicia sesión nuevamente.');
-                    router.push('/(user)/screens/loginScreen');
+                    router.replace('/(user)/screens/loginScreen');
                 }
             } catch (error) {
                 console.error('Error al recuperar la CURP:', error);
@@ -56,13 +55,17 @@ const ProfileScreen = () => {
     }, []);
 
     const handleLogout = async () => {
-        await AsyncStorage.removeItem('userToken');
-        router.push('/(user)/screens/loginScreen');
+        await AsyncStorage.multiRemove(['userToken', 'userCURP']);
+        router.replace('/(user)/screens/loginScreen');
+    };
+
+    const handleGoBack = () => {
+        router.back();
     };
 
     return (
         <ScrollView style={tw`flex-1 bg-gray-100 p-6`}>
-            {/* Muestra el nombre completo */}
+
             <View style={tw`bg-white rounded-lg shadow p-6 mb-6`}>
                 <Text style={tw`text-4xl font-bold text-center text-blue-600 mb-4`}>{nombreCompleto}</Text>
 
@@ -89,10 +92,9 @@ const ProfileScreen = () => {
 
             <View style={tw`flex flex-col items-center mb-10`}>
                 {/* Botón de cerrar sesión estilizado */}
-                <Boton 
-                    title="Cerrar sesión" 
-                    onPress={handleLogout} 
-                    style={tw`bg-red-500 text-white py-2 px-4 rounded-lg shadow`} 
+                <Boton
+                    onPress={handleLogout}
+                    title="Cerrar Sesión"
                 />
             </View>
         </ScrollView>

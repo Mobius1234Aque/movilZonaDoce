@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { Text, View, Image, TouchableOpacity, ScrollView } from "react-native";
 import tw from "twrnc";
 import { Ionicons } from "@expo/vector-icons"; // Paquete de iconos compatible con Expo
+import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+import { router } from 'expo-router';
+
 
 const CardPregunta = ({ pregunta, respuesta }) => (
   <View style={tw`bg-gray-100 rounded-lg p-6 my-4 shadow-md`}>
@@ -16,6 +19,11 @@ const Contenido = () => (
   </View>
 );
 
+const handleGoBack = () => {
+  router.back();
+};
+
+
 export default function Preguntas() {
   const [showChatBot, setShowChatBot] = useState(false);
 
@@ -25,6 +33,13 @@ export default function Preguntas() {
 
   return (
     <ScrollView style={tw`flex-1 bg-white`}>
+      <View style={tw`flex flex-row self-start ml-4 mt-4`}>
+        <TouchableOpacity onPress={handleGoBack} style={tw`flex-row items-center mb-4`}>
+          <MaterialCommunityIcons name="arrow-left" size={24} color="black" />
+          <Text style={tw`text-lg text-black ml-2`}>Regresar</Text>
+        </TouchableOpacity>
+      </View>
+
       {/* Presentación */}
       <View style={tw`p-6 items-center`}>
         <Text style={tw`text-4xl font-bold text-blue-900 mb-4`}>Preguntas Frecuentes</Text>

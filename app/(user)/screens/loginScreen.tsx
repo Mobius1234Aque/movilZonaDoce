@@ -12,28 +12,34 @@ export default function LoginScreen() {
     const [curp, setCurp] = useState('');
     const [contrasena, setContrasena] = useState('');
     const [error, setError] = useState<string | null>(null);
-    const [loading, setLoading] = useState(false); // Estado para indicar que se está cargando
+    const [loading, setLoading] = useState(false);
 
     const handleSave = async () => {
-        setLoading(true); // Comienza la carga
-        setError(null);   // Resetea cualquier error anterior
+        setLoading(true);
+        setError(null);
 
         const response = await handleLogin(curp, contrasena);
 
-        setLoading(false); // Finaliza la carga
+        setLoading(false);
 
-        if (response && response.success) {
-            // Guardar la CURP en AsyncStorage si el inicio de sesión es correcto
+        if (response.success) {
             try {
                 await AsyncStorage.setItem('userCURP', curp);
-                console.log("CURP guardada correctamente.");
+
+                if (response.email) {
+                    await AsyncStorage.setItem('userEmail', response.email);
+                    console.log("CURP y correo guardados correctamente.");
+                } else {
+                    console.warn("Correo no encontrado en la respuesta. Solo se guarda la CURP.");
+                }
             } catch (error) {
-                console.error("Error al guardar la CURP:", error);
+                console.error("Error al guardar la CURP o el correo:", error);
             }
 
-            router.push('/(tabs)'); // Navega a la pantalla principal en caso de éxito
+            // Reemplaza 'push' con 'replace' para eliminar LoginScreen del historial
+            router.replace('/(tabs)');
         } else {
-            setError(response?.message || "Ocurrió un error inesperado");
+            setError(response.message || "Ocurrió un error inesperado");
         }
     };
 
@@ -60,14 +66,12 @@ export default function LoginScreen() {
                 />
             </View>
 
-            {/* Mostrar mensaje de error si existe */}
             {error && (
                 <View style={tw`mt-4 mx-8`}>
                     <Text style={tw`text-red-500 text-lg`}>{error}</Text>
                 </View>
             )}
 
-            {/* Mostrar indicador de carga mientras se realiza la autenticación */}
             {loading && (
                 <View style={tw`mt-4 mx-8`}>
                     <ActivityIndicator size="large" color="#0000ff" />

@@ -1,13 +1,16 @@
 // controllers/authController.ts
 import { loginUser } from "../model/authModel";
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export async function handleLogin(curp: string, contrasena: string) {
     try {
         const response = await loginUser(curp, contrasena);
         if (response.success) {
-            // Asegúrate de que el token se esté enviando en la respuesta
-            return { success: true, token: response.token };
+            // Incluye 'email' en la respuesta si está presente
+            return {
+                success: true,
+                token: response.token,
+                email: response.email, // Asegúrate de que esto venga del backend
+            };
         } else {
             return { success: false, message: response.message || "Credenciales incorrectas" };
         }
@@ -18,4 +21,3 @@ export async function handleLogin(curp: string, contrasena: string) {
         return { success: false, message: "Ocurrió un error desconocido" };
     }
 }
-

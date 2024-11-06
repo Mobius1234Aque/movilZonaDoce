@@ -7,7 +7,7 @@ export async function loginUser(curp: string, contrasena: string) {
             curp: curp.trim().toUpperCase(),
             contrasena,
         });
-        return response.data;
+        return response.data; // La respuesta incluye 'email' si el backend lo envía
     } catch (error) {
         throw new Error("Error de autenticación");
     }

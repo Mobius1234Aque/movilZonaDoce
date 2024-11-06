@@ -7,9 +7,7 @@ import { useColorScheme } from "@/hooks/useColorScheme";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import Entypo from "@expo/vector-icons/Entypo";
-import AntDesign from "@expo/vector-icons/AntDesign";
 import { BottomTabBarProps } from "@react-navigation/bottom-tabs";
-
 
 export const CustomTabBar: React.FC<BottomTabBarProps> = ({
   state,
@@ -17,7 +15,6 @@ export const CustomTabBar: React.FC<BottomTabBarProps> = ({
   navigation,
 }) => {
   const colorScheme = useColorScheme();
-
   const { width } = useWindowDimensions();
 
   return (
@@ -26,7 +23,7 @@ export const CustomTabBar: React.FC<BottomTabBarProps> = ({
         width={width}
         height={70}
         viewBox="0 0 100 100"
-        style={{ position: "absolute", bottom: 0, borderColor:"#9DB2CE" }}
+        style={{ position: "absolute", bottom: 0, borderColor: "#9DB2CE" }}
       >
         <Path
           d="M0,0 L100,0 L100,60 C50,80 50,20 0,60 Z"
@@ -40,7 +37,7 @@ export const CustomTabBar: React.FC<BottomTabBarProps> = ({
           alignItems: "center",
           height: 80,
           paddingBottom: 10,
-          backgroundColor:"#DCDCDC"
+          backgroundColor: "#DCDCDC",
         }}
       >
         {state.routes.map((route, index) => {
@@ -69,7 +66,7 @@ export const CustomTabBar: React.FC<BottomTabBarProps> = ({
               style={{ flex: 1, alignItems: "center" }}
               activeOpacity={1}
             >
-              {index === 3 ? (
+              {index === 2 ? (
                 <View
                   style={{
                     width: 80,
@@ -89,50 +86,61 @@ export const CustomTabBar: React.FC<BottomTabBarProps> = ({
                     <TabBarIcon
                       name={isFocused ? "home" : "home-outline"}
                       size={width > 400 ? 18 : 16}
-                      color={isFocused ? Colors[colorScheme ?? "light"].tint : "#8e8e93"}
+                      color={
+                        isFocused
+                          ? Colors[colorScheme ?? "light"].tint
+                          : "#8e8e93"
+                      }
                     />
                   ) : label === "Foro" ? (
                     <MaterialCommunityIcons
                       name={isFocused ? "forum" : "forum-outline"}
                       size={width > 400 ? 18 : 16}
-                      color={isFocused ? Colors[colorScheme ?? "light"].tint : "#8e8e93"}
+                      color={
+                        isFocused
+                          ? Colors[colorScheme ?? "light"].tint
+                          : "#8e8e93"
+                      }
                     />
                   ) : label === "Evidencias" ? (
                     <Entypo
                       name="documents"
-                      size={width ? 18 : 16}
-                      color={isFocused ? Colors[colorScheme ?? "light"].tint : "#8e8e93"}
+                      size={width > 400 ? 18 : 16}
+                      color={
+                        isFocused
+                          ? Colors[colorScheme ?? "light"].tint
+                          : "#8e8e93"
+                      }
                     />
                   ) : label === "Calendario" ? (
                     <Entypo
                       name="calendar"
                       size={width > 400 ? 18 : 16}
-                      color={isFocused ? Colors[colorScheme ?? "light"].tint : "#8e8e93"}
+                      color={
+                        isFocused
+                          ? Colors[colorScheme ?? "light"].tint
+                          : "#8e8e93"
+                      }
                     />
-                  ) : label === "Documentos" ? (
-                    <AntDesign
-                      name={isFocused ? "folderopen" : "folder1"}
-                      size={width > 400 ? 18 : 16}
-                      color={isFocused ? Colors[colorScheme ?? "light"].tint : "#8e8e93"}
-                    />
-                  ) : label === "Planes" ? (
-                    <MaterialIcons
-                      name="subscriptions"
-                      size={width > 400 ? 18 : 16}
-                      color={isFocused ? Colors[colorScheme ?? "light"].tint : "#8e8e93"}
-                    />
-                  ) : label === "Ayuda" ? (
+                  ) : label === "Mas" ? (
                     <Entypo
-                      name="help"
+                      name="menu"
                       size={width > 400 ? 18 : 16}
-                      color={isFocused ? Colors[colorScheme ?? "light"].tint : "#8e8e93"}
-                    />
-                  ) : null}
+                      color={
+                        isFocused
+                          ? Colors[colorScheme ?? "light"].tint
+                          : "#8e8e93"
+                      }
+                    />) : null}
                 </>
               )}
               <Text
                 style={{
-                  color: isFocused ? Colors[colorScheme ?? "light"].tint : "#8e8e93",fontWeight:"500", fontSize: width > 400 ? 14 : 12,
+                  color: isFocused
+                    ? Colors[colorScheme ?? "light"].tint
+                    : "#8e8e93",
+                  fontWeight: "500",
+                  fontSize: width > 400 ? 14 : 12,
                 }}
               >
                 {label}

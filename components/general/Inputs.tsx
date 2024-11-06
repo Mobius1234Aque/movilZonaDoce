@@ -60,7 +60,7 @@ const PasswordInput: React.FC<InputProps> = ({ title, iconName, value, onChangeT
             <View style={tw`flex-row items-center border border-gray-300 mx-8 rounded-lg bg-gray-100 px-4`}>
                 <Ionicons name={iconName} size={24} color="#888" />
                 <TextInput
-                    style={tw`flex-1 h-12 ml-6 text-xl`}
+                    style={tw`flex-1 h-12 ml-2 text-xl`}
                     placeholder={title}
                     secureTextEntry={isSecure}
                     autoCapitalize="none"
