@@ -5,10 +5,12 @@ import * as DocumentPicker from 'expo-document-picker'; // Importa el Document P
 import { uploadBytes, getDownloadURL, ref } from "firebase/storage"; // Firebase Storage
 import { storage } from "../../firebase/config"; // Configuración de Firebase
 import AsyncStorage from '@react-native-async-storage/async-storage'; // Para obtener la CURP del almacenamiento local
-import FloatButton from "@/components/general/floatButton";
 import DocsCard from "@/components/cards/cardDocumentos"; // Importa el componente Card
 import { v4 as uuidv4 } from 'uuid'; // Para generar nombres únicos
 import 'react-native-get-random-values'; // Importa el polyfill
+import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+import { router } from 'expo-router';
+
 
 export default function Documentos() {
   const [modalVisible, setModalVisible] = useState(false);
@@ -149,9 +151,14 @@ export default function Documentos() {
     closeModal(); // Cierra el modal después de entregar
   };
 
+  const handleGoBack = () => {
+    router.back();
+  };
+
+
   if (loading) {
     return (
-      <View style={tw`flex-1 justify-center items-center`}>
+      <View style={tw`flex-1 justify-center items-center bg-white`}>
         <ActivityIndicator size="large" color="#0000ff" />
       </View>
     );
@@ -167,7 +174,15 @@ export default function Documentos() {
 
   return (
     <View style={tw`flex-1 bg-white`}>
+      <View style={tw`flex flex-row self-start ml-4 mt-4`}>
+        <TouchableOpacity onPress={handleGoBack} style={tw`flex-row items-center mb-4`}>
+          <MaterialCommunityIcons name="arrow-left" size={24} color="black" />
+          <Text style={tw`text-lg text-black ml-2`}>Regresar</Text>
+        </TouchableOpacity>
+      </View>
+
       <ScrollView contentContainerStyle={tw`p-4`}>
+
         {/* Renderizamos la lista de documentos obtenidos desde la API */}
         {documentos.map((doc, index) => (
           <DocsCard
