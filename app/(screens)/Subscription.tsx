@@ -11,59 +11,56 @@ const SubscriptionScreen = () => {
 
     const [loading, setLoading] = useState(false);
 
+
     const initializePaymentSheet = async () => {
-        // Activa el estado de carga mientras se ejecuta la configuración
         setLoading(true);
         try {
-            // Recupera el email del usuario almacenado en `AsyncStorage`
+            // Recupera el email y la CURP del usuario desde AsyncStorage
             const storedEmail = await AsyncStorage.getItem('userEmail');
+            const storedCurp = await AsyncStorage.getItem('userCURP');
 
-            // Si el email no se encuentra, lanza un error indicando que el usuario debe iniciar sesión nuevamente
-            if (!storedEmail) throw new Error('Email no encontrado. Por favor, inicia sesión nuevamente.');
+            console.log(storedCurp);
 
-            // Envía una solicitud para crear la suscripción en el backend
-            // La solicitud se envía a la URL donde está configurado el servidor backend
-            const response = await fetch('http://192.168.101.18:3000/payments/create-subscription', {
+            if (!storedEmail || !storedCurp) {
+                throw new Error('Email o CURP no encontrado. Por favor, inicia sesión nuevamente.');
+            }
+
+            // Enviar una solicitud al backend para crear la suscripción con email y CURP
+            const response = await fetch('http://172.31.99.151:3000/payments/create-subscription', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json', // Establece el tipo de contenido como JSON
+                    'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    email: storedEmail, // Envía el correo del usuario como parte del cuerpo de la solicitud
-                    priceId: 'price_1QHb2XDuSddEszG09vtp6eXZ', // Reemplaza con el ID de precio real de Stripe
+                    email: storedEmail,
+                    priceId: 'price_1QHb2XDuSddEszG09vtp6eXZ',
+                    curp: storedCurp, // Añade la CURP al cuerpo de la solicitud
+
                 }),
             });
 
-            // Espera la respuesta del servidor y extrae el `clientSecret` de la respuesta JSON
             const { clientSecret } = await response.json();
 
-            // Inicializa el PaymentSheet de Stripe con `initPaymentSheet`
-            // Incluye el `clientSecret` y el nombre del comercio que verá el usuario
+            // Inicializar el PaymentSheet de Stripe
             const { error } = await initPaymentSheet({
-                merchantDisplayName: 'EduZona 12', // Nombre visible en la hoja de pago
-                paymentIntentClientSecret: clientSecret, // Clave secreta del pago
+                merchantDisplayName: 'EduZona 12',
+                paymentIntentClientSecret: clientSecret,
             });
 
-            // Verifica si `initPaymentSheet` arrojó un error
             if (!error) {
                 console.log('PaymentSheet inicializado correctamente');
             } else {
-                // Muestra una alerta si hay un error al inicializar el PaymentSheet
                 Alert.alert('Error', 'Hubo un problema al inicializar el PaymentSheet');
             }
         } catch (error) {
-            // Muestra un mensaje de error si ocurre un problema en cualquier parte del proceso
             if (error instanceof Error) {
-                // Si el error es una instancia de `Error`, muestra el mensaje de error en la consola y en una alerta
                 console.error('Error inicializando PaymentSheet:', error);
                 Alert.alert('Error', error.message || 'No se pudo inicializar el PaymentSheet');
             } else {
-                // Muestra un mensaje de error genérico si el error no es una instancia de `Error`
                 console.error('Error desconocido:', error);
                 Alert.alert('Error', 'Ocurrió un error desconocido');
             }
         } finally {
-            // Desactiva el estado de carga independientemente de si el proceso fue exitoso o no
             setLoading(false);
         }
     };

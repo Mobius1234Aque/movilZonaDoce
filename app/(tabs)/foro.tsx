@@ -4,7 +4,7 @@ import tw from "twrnc";
 import UploadExamModal from "@/components/modal/modal";
 import FloatButton from "@/components/general/floatButton";
 import ForumCard from "@/components/cards/cardForum";
-import { loadSubjects } from "@/app/(tabs)/Controllers/foroController";
+import { loadSubjects } from "@/app/Controllers/foroController";
 import { useRouter } from 'expo-router';  // Para la navegación
 
 interface Subject {

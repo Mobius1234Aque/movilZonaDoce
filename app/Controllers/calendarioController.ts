@@ -1,5 +1,5 @@
 // controllers/agendaController.ts
-import { fetchAgenda } from "@/app/(tabs)/models/calendarioModel";
+import { fetchAgenda } from "@/app/models/calendarioModel";
 
 export async function loadAgenda() {
     const result = await fetchAgenda();

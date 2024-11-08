@@ -4,7 +4,7 @@ import { View, Text, FlatList, ActivityIndicator } from 'react-native';
 import { Calendar } from 'react-native-calendars';
 import tw from 'twrnc';
 import { Ionicons } from '@expo/vector-icons';
-import { loadAgenda } from "@/app/(tabs)/Controllers/calendarioController";
+import { loadAgenda } from "@/app/Controllers/calendarioController";
 
 const CalendarWithItems = ({ testID }: { testID?: string }) => {
     const [selectedDate, setSelectedDate] = useState<string | null>(null);

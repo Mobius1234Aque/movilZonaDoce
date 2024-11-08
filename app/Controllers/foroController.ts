@@ -1,4 +1,4 @@
-import { fetchSubjects } from "@/app/(tabs)/models/foroModel";
+import { fetchSubjects } from "@/app/models/foroModel";
 
 export async function loadSubjects() {
     try {

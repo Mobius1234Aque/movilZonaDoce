@@ -23,7 +23,7 @@ const HeaderProfile: React.FC = () => {
         </View>
         <View style={[tw`flex-col items-center`, { marginTop: height * 0.03 }]}>
           <Image
-            source={{ uri: 'https://w7.pngwing.com/pngs/340/946/png-transparent-avatar-user-computer-icons-software-developer-avatar-child-face-heroes-thumbnail.png' }}
+            source={{ uri: 'https://storage.googleapis.com/macubeta/persona.png' }}
             style={tw`w-30 h-30 rounded-full`}
           />
         </View>
