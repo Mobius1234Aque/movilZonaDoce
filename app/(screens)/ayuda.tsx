@@ -13,12 +13,7 @@ const CardPregunta = ({ pregunta, respuesta }) => (
   </View>
 );
 
-const Contenido = () => (
-  <View style={tw`p-4 bg-gray-100 rounded-lg shadow-md`}>
-    <Text style={tw`text-gray-800 text-base`}>Aquí va el contenido del ChatBot</Text>
-  </View>
-);
-
+ 
 const handleGoBack = () => {
   router.back();
 };
@@ -53,31 +48,16 @@ export default function Preguntas() {
       <View style={tw`px-6 mb-20`}>
         <CardPregunta
           pregunta="¿Cuál es el procedimiento para registrarse en el sistema?"
-          respuesta="El procedimiento formal implica enviar una solicitud al supervisor designado. La determinación de aceptación o rechazo de la solicitud recae en el supervisor..."
+          respuesta="El procedimiento formal implica enviar una solicitud al supervisor designado. La determinación de aceptación o rechazo de la solicitud recae en el supervisor, y el solicitante recibirá notificación por correo electrónico respecto a esta decisión. En caso de que la solicitud sea aceptada, se requiere completar el registro proporcionando exclusivamente el CURP (Clave Única de Registro de Población), seguido por el establecimiento de una contraseña y la inclusión de otros datos solicitados."
         />
 
         <CardPregunta
           pregunta="¿Cuál es el procedimiento para recuperar la contraseña?"
-          respuesta="Para recuperar la contraseña, el usuario debe acceder al apartado '¿Olvidó su contraseña?' en la página de inicio de sesión..."
+          respuesta="Para recuperar la contraseña, el usuario debe acceder al apartado designado como ''¿Olvidó su contraseña?'' en la página de inicio de sesión. Posteriormente, se solicitará al usuario ingresar su CURP (Clave Única de Registro de Población), y si la información es correcta, se le permitirá restaurar su contraseña mediante dos métodos previamente establecidos."
         />
       </View>
 
-      {/* Botón flotante más arriba */}
-      <TouchableOpacity
-        onPress={handleOnClick}
-        style={tw`absolute bottom-20 right-10 bg-blue-900 p-4 rounded-full shadow-lg`} // Cambié `bottom-10` a `bottom-20`
-      >
-        <Ionicons name="chatbubble-outline" size={24} color="white" />
-      </TouchableOpacity>
-
-      {/* Mostrar ChatBot si `showChatBot` es verdadero */}
-      {showChatBot && (
-        <View
-          style={tw`absolute bottom-32 right-5 p-4 bg-white border rounded-lg shadow-lg w-72`} // Aumenté el valor de `bottom` para el contenedor del ChatBot también
-        >
-          <Contenido />
-        </View>
-      )}
+     
     </ScrollView>
   );
 }
