@@ -1,90 +1,103 @@
-import { Text, Image, View, FlatList, TouchableOpacity, Dimensions } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { View, Text, FlatList, ActivityIndicator, Alert, TouchableOpacity, Linking, Dimensions } from "react-native";
 import tw from "twrnc";
-import UploadExamModal from "@/components/modal/modal"; // Importamos el modal
-import FloatButton from "@/components/general/floatButton";
-import CardComponent from "@/components/cards/cardImage";
+import axios from "axios";
+import { Ionicons } from "@expo/vector-icons";
+import { useFocusEffect } from "@react-navigation/native"; // Importa useFocusEffect
 
 // Definir el ancho de la pantalla
-const { width } = Dimensions.get('window');
+const { width } = Dimensions.get("window");
 
-// 1. Define la interfaz de cada card
+// Interfaz de cada card (ahora incluye título, curp, y pdfUrl)
 interface CardItem {
   id: string;
   title: string;
-  description: string;
-  imageUri: string;
+  curp: string;
+  pdfUrl: string;
 }
 
-// 2. Define los datos con el tipado
-const data: CardItem[] = [
-  {
-    id: '1',
-    title: 'Card Header 1',
-    description: 'This is a card description 1',
-    imageUri: 'https://example.com/my-image.jpg',
-  },
-  {
-    id: '2',
-    title: 'Card Header 2',
-    description: 'This is a card description 2',
-    imageUri: 'https://colegiolecole.edu.mx/wp-content/uploads/2024/01/WhatsApp-Image-2024-01-18-at-3.17.18-PM-1-768x1024.jpeg',
-  },
-  {
-    id: '3',
-    title: 'Card Header 3',
-    description: 'This is a card description 3',
-    imageUri: 'https://thumbs.dreamstime.com/z/vida-diaria-en-asia-escuela-primaria-escolares-aula-vang-vieng-laos-239871761.jpg',
-  },
-  {
-    id: '4',
-    title: 'Card Header 4',
-    description: 'This is a card description 4',
-    imageUri: 'https://example.com/another-image.jpg',
-  },
-  {
-    id: '5',
-    title: 'Card Header 5',
-    description: 'This is a card description 5',
-    imageUri: 'https://example.com/another-image.jpg',
-  },
-];
-
+// Componente principal
 export default function Evidencias() {
-  const [modalVisible, setModalVisible] = useState(false);
+  const [data, setData] = useState<CardItem[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  // 3. Tipar el parámetro item como CardItem
+  // Llamada a la API para obtener los PDFs
+  const fetchEvidencias = async () => {
+    try {
+      const response = await axios.get("https://servidor-zonadoce.vercel.app/consultarPDF");
+      const formattedData = response.data.map((item: any) => ({
+        id: item.id.toString(),
+        title: item.titulo,
+        curp: item.curp,
+        pdfUrl: item.pdf,
+      }));
+      setData(formattedData);
+    } catch (error) {
+      console.error("Error al obtener las evidencias:", error);
+      Alert.alert("Error", "No se pudieron cargar las evidencias");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Usar useFocusEffect para recargar los datos cada vez que la pantalla se enfoque
+  useFocusEffect(
+    React.useCallback(() => {
+      // Llamar a la función de actualización de los datos cada vez que se regrese a la pantalla
+      fetchEvidencias();
+    }, [])
+  );
+
+  // Renderizar cada card con título, CURP y PDF
   const renderItem = ({ item }: { item: CardItem }) => (
-    <View style={[
-      tw`p-2`, 
-      { width: (width / 2) - 16 } // Ajusta el ancho de la tarjeta para que ocupe la mitad de la pantalla con padding incluido
-    ]}>
-      <CardComponent
-        title={item.title}
-        description={item.description}
-        imageUri={item.imageUri}
-      />
+    <View
+      style={[
+        tw`p-4 bg-white shadow-lg rounded-lg my-2`,
+        { width: width - 32 },
+      ]}
+    >
+      {/* Ícono que representa la evidencia */}
+      <View style={tw`flex-1 justify-center items-center mb-4`}>
+        <Ionicons name="document-text" size={50} color="#4A90E2" />
+      </View>
+
+      {/* Título y CURP */}
+      <Text style={tw`text-xl font-semibold text-blue-800`}>{item.title}</Text>
+      <Text style={tw`text-sm text-gray-600 mt-2`}>CURP: {item.curp}</Text>
+
+      {/* Enlace al PDF */}
+      <TouchableOpacity
+        onPress={() => handleOpenPDF(item.pdfUrl)}
+        style={tw`mt-4 p-2 bg-blue-500 rounded-lg`}
+      >
+        <Text style={tw`text-white text-center`}>Ver PDF</Text>
+      </TouchableOpacity>
     </View>
   );
 
+  // Función para abrir el PDF en un navegador
+  const handleOpenPDF = (pdfUrl: string) => {
+    Linking.openURL(pdfUrl).catch((err) => console.error("Error al abrir PDF:", err));
+  };
+
+  if (loading) {
+    return (
+      <View style={tw`flex-1 justify-center items-center bg-gray-100`}>
+        <ActivityIndicator size="large" color="#00aaff" />
+        <Text style={tw`text-xl mt-4 text-gray-500`}>Cargando evidencias...</Text>
+      </View>
+    );
+  }
+
   return (
-    
-    <View style={tw`flex-1 bg-white`}>
+    <View style={tw`flex-1 bg-gray-50`}>
       {/* FlatList para mostrar los cards */}
       <FlatList
         data={data}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
-        numColumns={2}  
         contentContainerStyle={tw`p-4`}
-        columnWrapperStyle={{ justifyContent: 'space-between' }} // Para espaciado entre columnas
       />
-
-      {/* Modal */}
-      <UploadExamModal visible={modalVisible} onClose={() => setModalVisible(false)} />
-
-      {/* Botón flotante */}
-      <FloatButton onPress={() => setModalVisible(true)} title="Open Modal" />
     </View>
   );
 }
