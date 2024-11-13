@@ -31,7 +31,7 @@ const SubscriptionScreen = () => {
                 },
                 body: JSON.stringify({
                     email: storedEmail,
-                    priceId: 'price_1QHb2XDuSddEszG09vtp6eXZ',
+                    priceId: 'price_1QGnTvDuSddEszG0GaaTmj25',
                     curp: storedCurp,
                 }),
             });

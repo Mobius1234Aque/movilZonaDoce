@@ -42,7 +42,7 @@ export default function RootLayout() {
   }
 
   return (
-    <StripeProvider publishableKey="pk_test_51QCUVXDuSddEszG0vsa5R56UwyT7PjwWX9TF7vtTBx7RNU4ZTlFINTHomGOZaFUrzx4DMk1qQAHX9IkivUNqx0YY00HwQYlnTx">
+    <StripeProvider publishableKey="pk_live_51QCUVXDuSddEszG0pP0FhH8wvg0e6ROwKcgWAYc1M4OJD5AbCXpHMT4XofSAdkCV4W1TOzd9oX8tIWQtlEpRQXbH004WJrq3Ln">
       <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
         <Stack>
           <Stack.Screen name="profile"
