@@ -23,7 +23,7 @@ const ForumCard: React.FC<DocsCardProps> = ({ title, description, onPress }) => 
         <View style={tw`ml-4`}>
 
           {/* Título */}
-          <Text style={tw`text-lg font-bold`} numberOfLines={1}>
+          <Text style={tw`text-lg font-bold text-blue-500`} numberOfLines={1}>
             {title}
           </Text>
 

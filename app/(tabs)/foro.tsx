@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { View, ScrollView, Text, ActivityIndicator } from "react-native";
+import { View, ScrollView, Text, ActivityIndicator, Alert } from "react-native";
 import tw from "twrnc";
 import UploadExamModal from "@/components/modal/modal";
 import FloatButton from "@/components/general/floatButton";
 import ForumCard from "@/components/cards/cardForum";
 import { loadSubjects } from "@/app/Controllers/foroController";
-import { useRouter } from 'expo-router';  // Para la navegación
+import { useRouter } from "expo-router";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
 
 interface Subject {
   id: number;
@@ -21,31 +23,43 @@ export default function Foro() {
   const [subjects, setSubjects] = useState<Subject[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const router = useRouter(); // Para la navegación
+  const [isSubscribed, setIsSubscribed] = useState<boolean>(false);
+  const router = useRouter();
 
   const fetchSubjectsData = async () => {
-    setLoading(true); // Indicamos que empieza la carga
+    setLoading(true);
     const result = await loadSubjects();
 
     if (result.success) {
       setSubjects(result.data);
-      setError(null); // Limpiamos cualquier error previo
+      setError(null);
     } else {
       setError(result.message);
     }
 
-    setLoading(false); // Indicamos que termina la carga
+    setLoading(false);
+  };
+
+  const verificarSuscripcion = async () => {
+    try {
+      const curp = await AsyncStorage.getItem("userCURP");
+      if (!curp) throw new Error("No se encontró el CURP");
+
+      const response = await axios.get(`http://192.168.101.18:3000/payments/verify-subscription-status?curp=${curp}`);
+      setIsSubscribed(response.data.hasSubscription);
+    } catch (error) {
+      console.error("Error al verificar la suscripción:", error);
+    }
   };
 
   useEffect(() => {
-    fetchSubjectsData(); // Cargar los datos al montar el componente
+    fetchSubjectsData();
+    verificarSuscripcion();
 
-    // Establecer un intervalo para actualizar los datos cada 30 segundos
     const intervalId = setInterval(() => {
       fetchSubjectsData();
     }, 30000);
 
-    // Limpiar el intervalo al desmontar el componente
     return () => clearInterval(intervalId);
   }, []);
 
@@ -74,12 +88,11 @@ export default function Foro() {
             title={subject.materia}
             description={subject.descripcion}
             onPress={() => {
-              // Navegamos a la pantalla de detalles del examen con los datos
               router.push({
                 pathname: "../(screens)/examenDetails",
                 params: {
                   examId: subject.id,
-                  examData: JSON.stringify(subject),  // Convertimos subject a string JSON
+                  examData: JSON.stringify(subject),
                 },
               });
             }}
@@ -88,7 +101,11 @@ export default function Foro() {
       </ScrollView>
 
       <UploadExamModal visible={modalVisible} onClose={() => setModalVisible(false)} />
-      <FloatButton onPress={() => setModalVisible(true)} title="Subir Documento" />
+      <FloatButton
+        onPress={() => setModalVisible(true)}
+        title="Subir Documento"
+        isSubscribed={isSubscribed} // Pasamos el estado de suscripción
+      />
     </View>
   );
 }

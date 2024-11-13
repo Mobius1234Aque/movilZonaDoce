@@ -52,53 +52,53 @@ const Index: React.FC = () => {
   }, []);
 
   return (
-    
-      <ScrollView contentContainerStyle={tw`flex-grow`}>
-        
-        {/* Saludo responsivo */}
-        <View style={tw`mt-10 flex flex-col justify-center`}>
-          <Text style={tw`mx-8 ${width < 400 ? 'text-xl' : 'text-2xl'} font-bold`}>
-            Hola Prof. {nombreCompleto || "Juan"} {/* Muestra "Juan" si no se carga el nombre */}
-          </Text>
-        </View>
 
-        {/* Animación de la imagen flotante */}
-        <View style={tw`mt-10 flex flex-col justify-center items-center`}>
-          <Animatable.View
-            animation="bounceIn"  // Efecto de animación de entrada
-            iterationCount="infinite"  // Hace que la animación se repita infinitamente
-            direction="alternate"  // Alterna el movimiento hacia arriba y abajo
-            style={{ width: 120, height: 120 }}  // Tamaño ajustado de la imagen
-          >
-            <Image
-              source={require('@/assets/images/alumno.png')}  // Reemplaza con tu propia imagen
-              style={{ width: 120, height: 120, borderRadius: 60 }}  // Imagen circular
-              resizeMode="contain" // Asegúrate de que la imagen no se deforme
-            />
-          </Animatable.View>
-        </View>
- 
+    <ScrollView contentContainerStyle={tw`flex-grow`}>
 
-        {/* Información adicional de la empresa */}
-        <View style={tw`mt-10 mx-8`}>
-          <Text style={tw`text-lg font-bold text-gray-800`}>Supervisión Escolar Sistema Indígena Numero 12 de Huazalingo Hidalgo</Text>
-          <Text style={tw`mt-4 text-sm text-gray-600`}>
-            Es una unidad económica registrada desde 2014-12 que se dedica a la actividad económica{" "}
-            <Text style={tw`font-bold`}>Actividades administrativas de instituciones de bienestar social</Text>, 
-            clasificada por (SCIAN) 931610, con domicilio en, Col. Guillermo Rossell, Huazalingo, Huazalingo, 
-            Hidalgo C.P. 43070. 
-          </Text>
-          <Text style={tw`mt-4 text-sm text-gray-600`}>
-            Puedes contactarlos a través de <Text style={tw`font-bold`}>7711499741</Text>, o visitando su sitio web.
-          </Text>
-          <Text style={tw`mt-4 text-sm text-gray-600 mb-30`}>
-            Toda la información sobre esta empresa se ha obtenido a través de fuentes públicas del gobierno de 
-            Huazalingo, Hidalgo, México.
-          </Text>
-        </View>
+      {/* Saludo responsivo */}
+      <View style={tw`mt-10 flex flex-col justify-center`}>
+        <Text style={tw`mx-8 ${width < 400 ? 'text-xl' : 'text-2xl'} font-bold`}>
+          Hola Prof. {nombreCompleto || "Juan"} {/* Muestra "Juan" si no se carga el nombre */}
+        </Text>
+      </View>
 
-      </ScrollView>
-    
+      {/* Animación de la imagen flotante */}
+      <View style={tw`mt-10 flex flex-col justify-center items-center`}>
+        <Animatable.View
+          animation="bounceIn"  // Efecto de animación de entrada
+          iterationCount="infinite"
+          direction="alternate"  // Alterna el movimiento hacia arriba y abajo
+          style={{ width: 120, height: 120 }}  // Tamaño ajustado de la imagen
+        >
+          <Image
+            source={require('@/assets/images/alumno.png')}  // Reemplaza con tu propia imagen
+            style={{ width: 120, height: 120, borderRadius: 0 }}  // Imagen circular
+            resizeMode="contain" // Asegúrate de que la imagen no se deforme
+          />
+        </Animatable.View>
+      </View>
+
+
+      {/* Información adicional de la empresa */}
+      <View style={tw`mt-10 mx-8`}>
+        <Text style={tw`text-2xl font-bold text-gray-800`}>Supervisión Escolar Sistema Indígena Numero 12 de Huazalingo Hidalgo</Text>
+        <Text style={tw`mt-4 text-lg text-gray-600`}>
+          Es una unidad económica registrada desde 2014-12 que se dedica a la actividad económica{" "}
+          <Text style={tw`font-bold`}>Actividades administrativas de instituciones de bienestar social</Text>,
+          clasificada por (SCIAN) 931610, con domicilio en, Col. Guillermo Rossell, Huazalingo, Huazalingo,
+          Hidalgo C.P. 43070.
+        </Text>
+        <Text style={tw`mt-4 text-sm text-gray-600`}>
+          Puedes contactarlos a través de <Text style={tw`font-bold`}>7711499741</Text>, o visitando su sitio web.
+        </Text>
+        <Text style={tw`mt-4 text-sm text-gray-600 mb-30`}>
+          Toda la información sobre esta empresa se ha obtenido a través de fuentes públicas del gobierno de
+          Huazalingo, Hidalgo, México.
+        </Text>
+      </View>
+
+    </ScrollView>
+
   );
 };
 
