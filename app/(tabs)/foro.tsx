@@ -89,13 +89,14 @@ export default function Foro() {
             description={subject.descripcion}
             onPress={() => {
               router.push({
-                pathname: "../(screens)/examenDetails",
+                pathname: "/examenDetails",
                 params: {
                   examId: subject.id,
                   examData: JSON.stringify(subject),
                 },
               });
             }}
+
           />
         ))}
       </ScrollView>
