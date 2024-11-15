@@ -18,7 +18,7 @@ const FreePlanScreen = () => {
       const curp = await AsyncStorage.getItem('userCURP');
       if (!curp) throw new Error('No se encontró el CURP');
 
-      const response = await fetch(`http://172.31.99.151:3000/payments/verify-subscription-status?curp=${curp}`);
+      const response = await fetch(`https://servidor-zona12-api.vercel.app/payments/verify-subscription-status?curp=${curp}`);
       const data = await response.json();
 
       setIsSubscribed(data.hasSubscription);
@@ -39,7 +39,7 @@ const FreePlanScreen = () => {
         return;
       }
 
-      const response = await fetch('http://172.31.99.151:3000/payments/cancel-subscription', {
+      const response = await fetch('https://servidor-zona12-api.vercel.app/payments/cancel-subscription', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
