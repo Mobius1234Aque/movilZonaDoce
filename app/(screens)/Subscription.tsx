@@ -24,7 +24,7 @@ const SubscriptionScreen = () => {
                 throw new Error('Email o CURP no encontrado. Por favor, inicia sesión nuevamente.');
             }
 
-            const response = await fetch('http://192.168.101.18:3000/payments/create-subscription', {
+            const response = await fetch('https://servidor-zona12-api.vercel.app/payments/create-subscription', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

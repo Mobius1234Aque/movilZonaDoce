@@ -49,7 +49,7 @@ export default function Evidencias() {
     try {
       const curp = await AsyncStorage.getItem('userCURP');
       if (!curp) throw new Error('No se encontró el CURP');
-      const response = await axios.get(`http://192.168.101.18:3000/payments/verify-subscription-status?curp=${curp}`);
+      const response = await axios.get(`https://servidor-zona12-api.vercel.app/payments/verify-subscription-status?curp=${curp}`);
       setIsSubscribed(response.data.hasSubscription);
     } catch (error) {
       console.error("Error al verificar la suscripción:", error);
