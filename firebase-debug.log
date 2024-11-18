@@ -1,0 +1,58 @@
+[debug] [2024-11-18T17:31:51.605Z] ----------------------------------------------------------------------
+[debug] [2024-11-18T17:31:51.607Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\HP\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js login:ci
+[debug] [2024-11-18T17:31:51.607Z] CLI Version:   13.25.0
+[debug] [2024-11-18T17:31:51.607Z] Platform:      win32
+[debug] [2024-11-18T17:31:51.607Z] Node Version:  v18.16.1
+[debug] [2024-11-18T17:31:51.608Z] Time:          Mon Nov 18 2024 11:31:51 GMT-0600 (hora estándar central)
+[debug] [2024-11-18T17:31:51.609Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2024-11-18T17:31:51.612Z] >>> [apiv2][query] GET https://firebase-public.firebaseio.com/cli.json [none]
+[warn] !  Authenticating with a `login:ci` token is deprecated and will be removed in a future major version of `firebase-tools`. Instead, use a service account key with `GOOGLE_APPLICATION_CREDENTIALS`: https://cloud.google.com/docs/authentication/getting-started 
+[info] 
+[info] Visit this URL on this device to log in:
+[info] https://accounts.google.com/o/oauth2/auth?client_id=563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com&scope=email%20openid%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fcloudplatformprojects.readonly%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Ffirebase%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fcloud-platform&response_type=code&state=328519500&redirect_uri=http%3A%2F%2Flocalhost%3A9005
+[info] 
+[info] Waiting for authentication...
+[debug] [2024-11-18T17:31:56.272Z] <<< [apiv2][status] GET https://firebase-public.firebaseio.com/cli.json 200
+[debug] [2024-11-18T17:31:56.273Z] <<< [apiv2][body] GET https://firebase-public.firebaseio.com/cli.json {"cloudBuildErrorAfter":1594252800000,"cloudBuildWarnAfter":1590019200000,"defaultNode10After":1594252800000,"minVersion":"3.0.5","node8DeploysDisabledAfter":1613390400000,"node8RuntimeDisabledAfter":1615809600000,"node8WarnAfter":1600128000000}
+[debug] [2024-11-18T17:32:54.230Z] >>> [apiv2][query] POST https://accounts.google.com/o/oauth2/token [none]
+[debug] [2024-11-18T17:32:54.231Z] >>> [apiv2][body] POST https://accounts.google.com/o/oauth2/token [omitted]
+[debug] [2024-11-18T17:32:55.041Z] >>> [apiv2][query] POST https://accounts.google.com/o/oauth2/token [none]
+[debug] [2024-11-18T17:32:55.041Z] >>> [apiv2][body] POST https://accounts.google.com/o/oauth2/token [omitted]
+[debug] [2024-11-18T17:32:55.089Z] >>> [apiv2][query] POST https://accounts.google.com/o/oauth2/token [none]
+[debug] [2024-11-18T17:32:55.089Z] >>> [apiv2][body] POST https://accounts.google.com/o/oauth2/token [omitted]
+[debug] [2024-11-18T17:32:55.363Z] >>> [apiv2][query] POST https://accounts.google.com/o/oauth2/token [none]
+[debug] [2024-11-18T17:32:55.363Z] >>> [apiv2][body] POST https://accounts.google.com/o/oauth2/token [omitted]
+[debug] [2024-11-18T17:32:55.898Z] >>> [apiv2][query] POST https://accounts.google.com/o/oauth2/token [none]
+[debug] [2024-11-18T17:32:55.898Z] >>> [apiv2][body] POST https://accounts.google.com/o/oauth2/token [omitted]
+[debug] [2024-11-18T17:32:56.043Z] >>> [apiv2][query] POST https://accounts.google.com/o/oauth2/token [none]
+[debug] [2024-11-18T17:32:56.043Z] >>> [apiv2][body] POST https://accounts.google.com/o/oauth2/token [omitted]
+[debug] [2024-11-18T17:32:56.502Z] >>> [apiv2][query] POST https://accounts.google.com/o/oauth2/token [none]
+[debug] [2024-11-18T17:32:56.503Z] >>> [apiv2][body] POST https://accounts.google.com/o/oauth2/token [omitted]
+[debug] [2024-11-18T17:32:56.839Z] <<< [apiv2][status] POST https://accounts.google.com/o/oauth2/token 200
+[debug] [2024-11-18T17:32:56.840Z] <<< [apiv2][body] POST https://accounts.google.com/o/oauth2/token [omitted]
+[info] 
+[info] +  Success! Use this token to login on a CI server:
+
+1//0f-xHufbyX4PuCgYIARAAGA8SNwF-L9IrehVDTt1BMz29dD8IU4EbA-Vin1oZ27bWmxuy1jLR4WYP3I2rbNfDJLYX6x_ot9_v_uY
+
+Example: firebase deploy --token "$FIREBASE_TOKEN"
+ 
+[debug] [2024-11-18T17:32:56.866Z] <<< [apiv2][status] POST https://accounts.google.com/o/oauth2/token 200
+[debug] [2024-11-18T17:32:56.866Z] <<< [apiv2][body] POST https://accounts.google.com/o/oauth2/token [omitted]
+[debug] [2024-11-18T17:32:56.867Z] <<< [apiv2][status] POST https://accounts.google.com/o/oauth2/token 200
+[debug] [2024-11-18T17:32:56.867Z] <<< [apiv2][body] POST https://accounts.google.com/o/oauth2/token [omitted]
+[debug] [2024-11-18T17:32:56.869Z] <<< [apiv2][status] POST https://accounts.google.com/o/oauth2/token 200
+[debug] [2024-11-18T17:32:56.869Z] <<< [apiv2][body] POST https://accounts.google.com/o/oauth2/token [omitted]
+[debug] [2024-11-18T17:32:56.870Z] <<< [apiv2][status] POST https://accounts.google.com/o/oauth2/token 200
+[debug] [2024-11-18T17:32:56.870Z] <<< [apiv2][body] POST https://accounts.google.com/o/oauth2/token [omitted]
+[debug] [2024-11-18T17:32:57.525Z] <<< [apiv2][status] POST https://accounts.google.com/o/oauth2/token 200
+[debug] [2024-11-18T17:32:57.526Z] <<< [apiv2][body] POST https://accounts.google.com/o/oauth2/token [omitted]
+[debug] [2024-11-18T17:32:57.563Z] <<< [apiv2][status] POST https://accounts.google.com/o/oauth2/token 200
+[debug] [2024-11-18T17:32:57.563Z] <<< [apiv2][body] POST https://accounts.google.com/o/oauth2/token [omitted]
+[debug] [2024-11-18T17:33:03.172Z] Error: Timed out.
+    at Timeout._onTimeout (C:\Users\HP\AppData\Roaming\npm\node_modules\firebase-tools\lib\utils.js:268:49)
+    at listOnTimeout (node:internal/timers:569:17)
+    at process.processTimers (node:internal/timers:512:7)
+[error] 
+[error] Error: An unexpected error has occurred.
