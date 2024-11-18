@@ -64,7 +64,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: android-apk
-          path: './build/android/app/build/outputs/apk/release/app-release.apk'
+          path: '**/*.apk' # Cambiado para capturar cualquier APK generado
 
   distribute:
     runs-on: ubuntu-latest
@@ -75,12 +75,17 @@ jobs:
         with:
           name: android-apk
 
+      - name: Set up Firebase credentials
+        run: |
+          echo "${{ secrets.FIREBASE_CREDENTIALS }}" > $HOME/firebase-credentials.json
+          export GOOGLE_APPLICATION_CREDENTIALS=$HOME/firebase-credentials.json
+
       - name: Install Firebase CLI
         run: npm install -g firebase-tools
 
       - name: Upload APK to Firebase App Distribution
         env:
-          FIREBASE_AUTH_TOKEN: ${{ secrets.FIREBASE_AUTH_TOKEN }}
+          GOOGLE_APPLICATION_CREDENTIALS: $HOME/firebase-credentials.json
         run: |
           APK_PATH=$(find . -type f -name "*.apk" | head -n 1)
           firebase appdistribution:distribute $APK_PATH \
