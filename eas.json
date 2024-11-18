@@ -9,16 +9,15 @@
       "distribution": "internal"
     },
     "preview": {
-      "ios": {
-        "simulator": true
-      },
       "android": {
-        "buildType": "apk"
+        "buildType": "apk",
+        "artifactPath": "android/app/build/outputs/apk/release/app-release.apk"
       }
     },
     "production": {
       "android": {
-        "buildType": "apk"
+        "buildType": "apk",
+        "artifactPath": "android/app/build/outputs/apk/release/app-release.apk"
       }
     }
   },
