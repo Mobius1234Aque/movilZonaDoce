@@ -64,7 +64,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: android-apk
-          path: '**/*.apk' # Cambiado para capturar cualquier APK generado
+          path: android/app/build/outputs/apk/release/app-release.apk
 
   distribute:
     runs-on: ubuntu-latest
