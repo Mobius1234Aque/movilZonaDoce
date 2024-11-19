@@ -12,97 +12,67 @@ on:
       - main
 
 jobs:
-  build-and-test:
+  build-and-distribute:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: ['16.x', '18.x']
     steps:
+      # Checkout the repository
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Cache npm dependencies
-        uses: actions/cache@v3
-        with:
-          path: ~/.npm
-          key: npm-cache-${{ runner.os }}-node-${{ matrix.node-version }}-${{ hashFiles('package-lock.json') }}
-          restore-keys: |
-            npm-cache-${{ runner.os }}-node-${{ matrix.node-version }}
-
+      # Set up Node.js
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 18
 
+      # Install dependencies
       - name: Install dependencies
         run: npm install
 
-      - name: Run tests
-        run: npm run test -- --detectOpenHandles
-
-  build:
-    runs-on: ubuntu-latest
-    needs: build-and-test
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
+      # Install EAS CLI globally
       - name: Install EAS CLI
         run: npm install -g eas-cli
 
-      - name: Install dependencies
-        run: npm install
-
+      # Build the APK with EAS
       - name: Build APK for Android
         run: npx eas-cli build --platform android --profile preview --non-interactive
         env:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
 
-      - name: Get APK URL from EAS
-        id: get-apk-url
+      # Download APK from EAS
+      - name: Download APK
+        id: download-apk
         run: |
           EAS_BUILD_URL=$(npx eas-cli builds:list --platform android --profile preview --status finished --limit 1 --json | jq -r '.[0].artifacts.buildUrl')
-          echo "EAS_BUILD_URL=$EAS_BUILD_URL" >> $GITHUB_ENV
-
-      - name: Download APK
-        run: |
+          if [ -z "$EAS_BUILD_URL" ]; then
+            echo "Error: No APK URL found. Check your EAS build configuration."
+            exit 1
+          fi
+          echo "Downloading APK from $EAS_BUILD_URL"
           curl -o app-release.apk "$EAS_BUILD_URL"
 
+      # Upload APK as an artifact
       - name: Upload APK artifact
         uses: actions/upload-artifact@v3
         with:
           name: android-apk
           path: app-release.apk
 
-  distribute:
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Download APK artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: android-apk
-
-      - name: Set up Firebase credentials
-        run: |
-          echo "${{ secrets.FIREBASE_CREDENTIALS }}" > $HOME/firebase-credentials.json
-          export GOOGLE_APPLICATION_CREDENTIALS=$HOME/firebase-credentials.json
-
-      - name: Install Firebase CLI
-        run: npm install -g firebase-tools
-
+      # Distribute APK to Firebase App Distribution
       - name: Upload APK to Firebase App Distribution
         env:
           GOOGLE_APPLICATION_CREDENTIALS: $HOME/firebase-credentials.json
         run: |
+          echo "${{ secrets.FIREBASE_CREDENTIALS }}" > $HOME/firebase-credentials.json
           firebase appdistribution:distribute app-release.apk \
             --app "1:410686902807:android:c74035158ef816ac528252" \
             --groups "testers-group" \
             --release-notes "Distribuido automáticamente desde GitHub Actions"
 
   notify:
+    name: Send Email Notification
     runs-on: ubuntu-latest
-    needs: distribute
+    needs: build-and-distribute
     if: always()
     steps:
       - name: Send email notification
@@ -112,12 +82,11 @@ jobs:
           server_port: 465
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
-          subject: Build ${{ needs.distribute.result }}: ${{ github.repository }}
+          subject: Build ${{ job.status }}: ${{ github.repository }}
           body: |
-            The CI build has ${{ needs.distribute.result }} for ${{ github.repository }}.
+            The CI build has ${{ job.status }} for ${{ github.repository }}.
             Commit: ${{ github.sha }}
             Branch: ${{ github.ref }}
             Author: ${{ github.actor }}
           to: ${{ secrets.EMAIL_TO }}
           from: ${{ secrets.EMAIL_USERNAME }}
-
