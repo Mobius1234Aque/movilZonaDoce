@@ -12,38 +12,41 @@ on:
       - main
 
 jobs:
-  distribute-only:
+  distribute:
     runs-on: ubuntu-latest
     steps:
-      # Checkout el repositorio para acceder al APK
+      # Checkout the repository
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Verifica que el APK esté disponible
+      # Debugging step to ensure the file is in the repository
+      - name: List all files for debugging
+        run: ls -R .
+
+      # Check if the APK file exists
       - name: Check APK existence
         run: |
-          if [ ! -f ./path-to-apk/app-release.apk ]; then
-            echo "Error: APK no encontrado en ../../more/app-release.apk"
+          if [ ! -f ./more/app-release.apk ]; then
+            echo "Error: APK no encontrado en ./more/app-release.apk"
             exit 1
           fi
 
-      # Instala Firebase CLI
-      - name: Install Firebase CLI
-        run: npm install -g firebase-tools
-
-      # Configura las credenciales de Firebase
+      # Set up Firebase credentials
       - name: Set up Firebase credentials
         run: |
           echo "${{ secrets.FIREBASE_CREDENTIALS }}" > $HOME/firebase-credentials.json
-        env:
-          GOOGLE_APPLICATION_CREDENTIALS: $HOME/firebase-credentials.json
+          export GOOGLE_APPLICATION_CREDENTIALS=$HOME/firebase-credentials.json
 
-      # Sube el APK a Firebase App Distribution
+      # Install Firebase CLI
+      - name: Install Firebase CLI
+        run: npm install -g firebase-tools
+
+      # Distribute the APK to Firebase App Distribution
       - name: Upload APK to Firebase App Distribution
         env:
           GOOGLE_APPLICATION_CREDENTIALS: $HOME/firebase-credentials.json
         run: |
-          firebase appdistribution:distribute ../../more/app-release.apk \
+          firebase appdistribution:distribute ./more/app-release.apk \
             --app "1:410686902807:android:c74035158ef816ac528252" \
             --groups "testers-group" \
             --release-notes "Distribuido automáticamente desde GitHub Actions"
