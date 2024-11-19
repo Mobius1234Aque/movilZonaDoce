@@ -32,14 +32,18 @@ jobs:
           name: android-apk
           path: app-release.apk
 
-      # Distribute APK to Firebase App Distribution
       - name: Upload APK to Firebase App Distribution
         env:
           GOOGLE_APPLICATION_CREDENTIALS: $HOME/firebase-credentials.json
         run: |
+          # Escribe las credenciales en un archivo
           echo "${{ secrets.FIREBASE_CREDENTIALS }}" > $HOME/firebase-credentials.json
+
+          # Verifica si el archivo se generó correctamente (opcional, para depuración)
+          cat $HOME/firebase-credentials.json
+
+          # Distribuye el APK con Firebase CLI
           firebase appdistribution:distribute app-release.apk \
             --app "1:410686902807:android:c74035158ef816ac528252" \
             --groups "testers-group" \
             --release-notes "Distribuido automáticamente desde GitHub Actions"
-
