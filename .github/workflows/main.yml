@@ -31,7 +31,7 @@ jobs:
 
       # Install EAS CLI globally
       - name: Install EAS CLI
-        run: npm install -g eas-cli
+        run: npm install -g eas-cli@latest
 
       # Build the APK with EAS
       - name: Build APK for Android
@@ -41,7 +41,6 @@ jobs:
 
       # Download APK from EAS
       - name: Download APK
-        id: download-apk
         run: |
           EAS_BUILD_URL=$(npx eas-cli builds:list --platform android --profile preview --status finished --limit 1 --json | jq -r '.[0].artifacts.buildUrl')
           if [ -z "$EAS_BUILD_URL" ]; then
