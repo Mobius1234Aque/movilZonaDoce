@@ -23,7 +23,7 @@ jobs:
       - name: Check APK existence
         run: |
           if [ ! -f ./path-to-apk/app-release.apk ]; then
-            echo "Error: APK no encontrado en ./more/app-release.apk"
+            echo "Error: APK no encontrado en ../../more/app-release.apk"
             exit 1
           fi
 
@@ -43,7 +43,7 @@ jobs:
         env:
           GOOGLE_APPLICATION_CREDENTIALS: $HOME/firebase-credentials.json
         run: |
-          firebase appdistribution:distribute ./more/app-release.apk \
+          firebase appdistribution:distribute ../../more/app-release.apk \
             --app "1:410686902807:android:c74035158ef816ac528252" \
             --groups "testers-group" \
             --release-notes "Distribuido automáticamente desde GitHub Actions"
