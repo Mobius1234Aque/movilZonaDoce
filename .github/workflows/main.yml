@@ -48,7 +48,7 @@ jobs:
         run: |
           EAS_BUILD_URL=$(npx eas-cli builds:list --platform android --profile preview --status finished --limit 1 --json | jq -r '.[0].artifacts.buildUrl')
           echo "EAS_BUILD_URL: $EAS_BUILD_URL"
-          curl -o app-release.apk $EAS_BUILD_URL
+          curl -o app-release.apk "$EAS_BUILD_URL"
 
       # Upload APK as an artifact
       - name: Upload APK artifact
@@ -69,12 +69,11 @@ jobs:
             --release-notes "Distribuido automáticamente desde GitHub Actions"
 
   notify:
-    name: Send Email Notification
     runs-on: ubuntu-latest
     needs: build-and-distribute
     if: always()
     steps:
-      - name: Send email notification
+      - name: Send Email Notification
         uses: dawidd6/action-send-mail@v3
         with:
           server_address: smtp.gmail.com
