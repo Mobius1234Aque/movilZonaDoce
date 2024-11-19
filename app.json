@@ -2,7 +2,7 @@
   "expo": {
     "name": "EduZona12",
     "slug": "pruebaConTypeScript",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/images/logo.png",
     "scheme": "myapp",
@@ -20,7 +20,8 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.mobius_5.pruebaConTypeScript"
+      "package": "com.mobius_5.pruebaConTypeScript",
+      "versionCode": 2
     },
     "web": {
       "bundler": "metro",
