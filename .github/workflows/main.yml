@@ -15,18 +15,15 @@ jobs:
   distribute-only:
     runs-on: ubuntu-latest
     steps:
-      # Descarga el APK directamente desde un enlace
-      - name: Download APK
-        run: |
-          APK_URL="https://expo.dev/artifacts/eas/mccVFQxrqik7BUYjyGH7Lv.apk" # Cambia por tu enlace APK
-          echo "Downloading APK from $APK_URL"
-          curl -o app-release.apk $APK_URL
+      # Checkout el repositorio para acceder al APK
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-      # Verifica si el APK fue descargado
+      # Verifica que el APK esté disponible
       - name: Check APK existence
         run: |
-          if [ ! -f app-release.apk ]; then
-            echo "Error: APK no encontrado en app-release.apk"
+          if [ ! -f ./path-to-apk/app-release.apk ]; then
+            echo "Error: APK no encontrado en ./more/app-release.apk"
             exit 1
           fi
 
@@ -41,18 +38,12 @@ jobs:
         env:
           GOOGLE_APPLICATION_CREDENTIALS: $HOME/firebase-credentials.json
 
-      # Verifica si las credenciales están configuradas correctamente (opcional)
-      - name: Verify Firebase credentials
-        run: |
-          echo "Contents of $HOME/firebase-credentials.json:"
-          cat $HOME/firebase-credentials.json
-
       # Sube el APK a Firebase App Distribution
       - name: Upload APK to Firebase App Distribution
         env:
           GOOGLE_APPLICATION_CREDENTIALS: $HOME/firebase-credentials.json
         run: |
-          firebase appdistribution:distribute app-release.apk \
+          firebase appdistribution:distribute ./more/app-release.apk \
             --app "1:410686902807:android:c74035158ef816ac528252" \
             --groups "testers-group" \
             --release-notes "Distribuido automáticamente desde GitHub Actions"
