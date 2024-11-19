@@ -1,8 +1,15 @@
 name: CI Pipeline
 
 on:
-  workflow_dispatch: # Para ejecutar manualmente el flujo
-
+  push:
+    branches:
+      - develop
+      - 'feature/*'
+      - 'hotfix/*'
+  pull_request:
+    branches:
+      - develop
+      - main
 jobs:
   distribute:
     runs-on: ubuntu-latest
