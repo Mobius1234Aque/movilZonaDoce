@@ -14,7 +14,7 @@ jobs:
       # Download APK from direct URL
       - name: Download APK
         run: |
-          APK_URL="https://expo.dev/artifacts/eas/wdY1ZbFjJ5QFc5EGTZTQNx.apk" # Reemplaza con tu enlace directo al APK
+          APK_URL="https://expo.dev/artifacts/eas/wdY1ZbFjJ5QFc5EGTZTQNx.apk"
           echo "Downloading APK from $APK_URL"
           curl -o app-release.apk "$APK_URL"
 
