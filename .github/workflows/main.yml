@@ -112,11 +112,12 @@ jobs:
           server_port: 465
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
-          subject: Build ${{ job.status }}: ${{ github.repository }}
+          subject: Build ${{ needs.distribute.result }}: ${{ github.repository }}
           body: |
-            The CI build has ${{ job.status }} for ${{ github.repository }}.
+            The CI build has ${{ needs.distribute.result }} for ${{ github.repository }}.
             Commit: ${{ github.sha }}
             Branch: ${{ github.ref }}
             Author: ${{ github.actor }}
           to: ${{ secrets.EMAIL_TO }}
           from: ${{ secrets.EMAIL_USERNAME }}
+
