@@ -49,4 +49,5 @@ jobs:
           firebase appdistribution:distribute ./more/app-release.apk \
             --app "1:410686902807:android:c74035158ef816ac528252" \
             --groups "testers-group" \
-            --release-notes "Distribuido automáticamente desde GitHub Actions"
+            --release-notes "Distribuido automáticamente desde GitHub Actions" \
+            --token "${{ secrets.FIREBASE_AUTH_TOKEN }}"
