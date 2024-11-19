@@ -4,7 +4,7 @@ on:
   workflow_dispatch: # Para ejecutar manualmente el flujo
 
 jobs:
-  distribute-only:
+  distribute:
     runs-on: ubuntu-latest
     steps:
       # Checkout the repository
