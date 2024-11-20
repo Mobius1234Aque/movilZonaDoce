@@ -9,13 +9,13 @@ on:
 jobs:
   distribute:
     runs-on: ubuntu-latest
-    if: github.event.workflow_run.conclusion == 'success' # Solo se ejecuta si el primer workflow se completó exitosamente
+    if: github.event.workflow_run.conclusion == 'success' # Solo se ejecuta si el primer workflow fue exitoso
     steps:
       # Checkout the repository
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Verifica la existencia del archivo APK
+      # Verify APK exists
       - name: Check APK existence
         run: |
           if [ ! -f ./more/app-release.apk ]; then
@@ -23,17 +23,17 @@ jobs:
             exit 1
           fi
 
-      # Configurar credenciales para Firebase
+      # Configure Firebase credentials
       - name: Set up Firebase credentials
         run: |
           echo "${{ secrets.FIREBASE_CREDENTIALS }}" > $HOME/firebase-credentials.json
           export GOOGLE_APPLICATION_CREDENTIALS=$HOME/firebase-credentials.json
 
-      # Instalar Firebase CLI
+      # Install Firebase CLI
       - name: Install Firebase CLI
         run: npm install -g firebase-tools
 
-      # Subir APK a Firebase App Distribution
+      # Upload APK to Firebase App Distribution
       - name: Upload APK to Firebase App Distribution
         env:
           GOOGLE_APPLICATION_CREDENTIALS: $HOME/firebase-credentials.json
